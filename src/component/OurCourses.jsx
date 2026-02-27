@@ -1,40 +1,37 @@
 import React from 'react';
-
-// ── tiny inline helpers so the file is self-contained ──────────────────────
-const Heading2 = ({ children }) => (
-  <h2 style={{ fontSize: 42, fontWeight: 700, color: '#1B2B4B', margin: 0, fontFamily: 'Georgia, serif' }}>
-    {children}
-  </h2>
-);
-
-const Description = ({ children, className }) => (
-  <p className={className} style={{ fontSize: 16, color: '#747474', margin: 0, fontFamily: 'sans-serif' }}>
-    {children}
-  </p>
-);
+import Heading2 from './Headings';
+import Description from './Descriptions';
 // ───────────────────────────────────────────────────────────────────────────
 
 // SVG icons matching the screenshot (outline style, light grey)
 const icons = {
   1: (
-    <svg width="24" height="24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-    </svg>
+    <img 
+      src={`${process.env.PUBLIC_URL}/images/1.svg`} 
+      alt="Web Design" 
+      style={{ width: 24, height: 24 }} 
+    />
   ),
   2: (
-    <svg width="24" height="24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" viewBox="0 0 24 24">
-      <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/>
-    </svg>
+    <img 
+      src={`${process.env.PUBLIC_URL}/images/2.svg`} 
+      alt="UI/UX Design" 
+      style={{ width: 24, height: 24 }} 
+    />
   ),
   3: (
-    <svg width="24" height="24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" viewBox="0 0 24 24">
-      <rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 20h8M12 18v2"/>
-    </svg>
+    <img 
+      src={`${process.env.PUBLIC_URL}/images/3.svg`} 
+      alt="Responsive Design" 
+      style={{ width: 24, height: 24 }} 
+    />
   ),
   4: (
-    <svg width="24" height="24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" viewBox="0 0 24 24">
-      <path d="M6 2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M9 7h6M9 12h6M9 17h4"/>
-    </svg>
+    <img 
+      src={`${process.env.PUBLIC_URL}/images/4.svg`} 
+      alt="E-commerce Solutions" 
+      style={{ width: 24, height: 24 }} 
+    />
   ),
 };
 
@@ -42,7 +39,7 @@ const courses = [
   { id: 1, icon: 1, title: 'Web Design',           description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
   { id: 2, icon: 2, title: 'UI/UX Design',          description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
   { id: 3, icon: 3, title: 'Responsive Design',     description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
-  { id: 4, icon: 4, title: 'E-commerce Solutions:', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
+  { id: 4, icon: 4, title: 'E commerce Solution', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
   { id: 5, type: 'figma',   title: 'UI/UX Design',         description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
   { id: 6, type: 'peoples', title: 'Custom Development',   description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
 ];
@@ -82,10 +79,10 @@ const baseCard = {
   background: '#fff',
   borderRadius: 12,
   boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
-  padding: '32px',
+  padding: '30px 24px',
   display: 'flex',
   flexDirection: 'column',
-  gap: 20,
+  gap: 16,
 };
 
 const iconBox = {
@@ -100,21 +97,27 @@ const iconBox = {
 };
 
 const cardTitle = {
-  fontSize: 15,
+  width: 149,
+  height: 24,
+  fontSize: 14,
   fontWeight: 700,
+  lineHeight: '24px',
   color: '#1B1D21',
   letterSpacing: '0.005em',
   margin: 0,
-  fontFamily: 'sans-serif',
+  fontFamily: 'Manrope, sans-serif',
 };
 
 const cardDesc = {
-  fontSize: 13,
-  lineHeight: '22px',
+  width: 194.53,
+  height: 64,
+  fontSize: 12,
+  lineHeight: '16px',
+  fontWeight: 500,
   color: '#6B7280',
   letterSpacing: '0.005em',
   margin: 0,
-  fontFamily: 'sans-serif',
+  fontFamily: 'Manrope, sans-serif',
 };
 
 export default function OurCourses() {
@@ -126,52 +129,62 @@ export default function OurCourses() {
         <Description className="text-center">Learn, grow, and integrate into society</Description>
       </div>
 
-      {/* Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: 24,
-      }}>
-        {courses.map((course) => {
-          // ── Wide Figma card (spans 2 cols) ──────────────────────────────
-          if (course.type === 'figma') {
-            return (
-              <div
-                key={course.id}
-                style={{
-                  gridColumn: 'span 2',
-                  background: '#fff',
-                  borderRadius: 10,
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
-                  display: 'flex',
-                  overflow: 'hidden',
-                  border: '0.84px solid #e5e7eb',
-                  minHeight: 212,
-                }}
-              >
-                {/* Left text side */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, minWidth: 0 }}>
-                  <div style={{ ...iconBox, background: '#F5F8FF' }}>
-                    <FigmaIcon />
-                  </div>
-                  <h3 style={cardTitle}>{course.title}</h3>
-                  <p style={{ ...cardDesc, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {course.description}
-                  </p>
+      {/* Main Layout: Left Grid + Right E-commerce Card */}
+      <div style={{ display: 'flex', gap: 24 }}>
+        {/* Left Side Grid */}
+        <div style={{ flex: 1 }}>
+          {/* First Row: 3 small cards */}
+          <div style={{ display: 'flex', gap: 20, marginBottom: 24 }}>
+            {courses.filter(c => [1, 2, 3].includes(c.id)).map((course) => (
+              <div key={course.id} style={{ ...baseCard, width: 280 }}>
+                <div style={iconBox}>
+                  {icons[course.icon]}
                 </div>
+                <h3 style={cardTitle}>{course.title}</h3>
+                <p style={cardDesc}>{course.description}</p>
+              </div>
+            ))}
+          </div>
 
-                {/* Right dark image side */}
+          {/* Second Row: Figma wide card + Custom Development card */}
+          <div style={{ display: 'flex', gap: 20 }}>
+            {/* Figma Wide Card */}
+            <div
+              style={{
+                flex: 1,
+                background: '#fff',
+                borderRadius: 10,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                display: 'flex',
+                overflow: 'hidden',
+                border: '0.84px solid #e5e7eb',
+                minHeight: 252,
+              }}
+            >
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, minWidth: 0 }}>
+                <div style={{ ...iconBox, background: '#F5F8FF' }}>
+                  <FigmaIcon />
+                </div>
+                <h3 style={cardTitle}>UI/UX Design</h3>
+                <p style={{ ...cardDesc, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.
+                </p>
+              </div>
+              <div style={{
+                width: '50%',
+                minWidth: 160,
+                padding: 16,
+                flexShrink: 0,
+              }}>
                 <div style={{
-                  width: '40%',
-                  minWidth: 140,
+                  width: '100%',
+                  height: '100%',
                   background: '#2c2c2c',
+                  borderRadius: 12,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: 16,
-                  flexShrink: 0,
                 }}>
-                  {/* Figma logo large */}
                   <svg viewBox="0 0 38 57" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 28.5a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="#1ABCFE"/>
                     <path d="M0 47.5A9.5 9.5 0 019.5 38H19v9.5a9.5 9.5 0 01-19 0z" fill="#0ACF83"/>
@@ -181,64 +194,53 @@ export default function OurCourses() {
                   </svg>
                 </div>
               </div>
-            );
-          }
-
-          // ── Wide Peoples card (spans 2 cols) ────────────────────────────
-          if (course.type === 'peoples') {
-            return (
-              <div
-                key={course.id}
-                style={{
-                  gridColumn: 'span 2',
-                  background: '#fff',
-                  borderRadius: 10,
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
-                  display: 'flex',
-                  overflow: 'hidden',
-                  border: '0.84px solid #e5e7eb',
-                  minHeight: 212,
-                }}
-              >
-                {/* Left text side */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, minWidth: 0 }}>
-                  <div style={{ ...iconBox, background: '#F5F8FF' }}>
-                    <ImageIcon />
-                  </div>
-                  <h3 style={cardTitle}>{course.title}</h3>
-                  <p style={{ ...cardDesc, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {course.description}
-                  </p>
-                </div>
-
-                {/* Right image side with people photo */}
-                <div style={{
-                  width: '40%',
-                  minWidth: 140,
-                  flexShrink: 0,
-                  overflow: 'hidden',
-                }}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/peoples.png`}
-                    alt="peoples"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                </div>
-              </div>
-            );
-          }
-
-          // ── Regular small card ──────────────────────────────────────────
-          return (
-            <div key={course.id} style={baseCard}>
-              <div style={iconBox}>
-                {icons[course.icon]}
-              </div>
-              <h3 style={cardTitle}>{course.title}</h3>
-              <p style={cardDesc}>{course.description}</p>
             </div>
-          );
-        })}
+
+            {/* Custom Development Card */}
+            <div style={{ ...baseCard, width: 280, flexShrink: 0 }}>
+              <div style={iconBox}>
+                <img 
+                  src={`${process.env.PUBLIC_URL}/images/6.svg`} 
+                  alt="Custom Development" 
+                  style={{ width: 24, height: 24 }} 
+                />
+              </div>
+              <h3 style={cardTitle}>Custom Development</h3>
+              <p style={cardDesc}>From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side: E-commerce Tall Card */}
+        <div
+          style={{
+            width: 280.7895,
+            height: 506,
+            background: '#fff',
+            borderRadius: 8.42,
+            border: '0.84px solid #e5e7eb',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={iconBox}>
+              {icons[4]}
+            </div>
+            <h3 style={cardTitle}>E-commerce Solution</h3>
+            <p style={cardDesc}>From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.</p>
+          </div>
+          <div style={{ flex: 1, overflow: 'hidden', padding: 16 }}>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/peoples.png`}
+              alt="peoples"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12 }}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
