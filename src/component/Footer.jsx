@@ -9,36 +9,38 @@ const navLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#285ADE] px-[80px] pt-16 pb-8">
+    <footer className="bg-[#285ADE] px-4 sm:px-8 lg:px-[80px] pt-10 lg:pt-16 pb-6 lg:pb-8">
       {/* Top Section - Questions */}
-      <div className="mb-16">
-        <h2 className="font-bold text-white text-[48px] leading-[100%] mb-6">
+      <div className="mb-10 lg:mb-16">
+        <h2 className="font-bold text-white text-[28px] sm:text-[36px] lg:text-[48px] leading-[100%] mb-4 lg:mb-6 text-center lg:text-left">
           Do you have<br />any questions?
         </h2>
 
-        <div className="flex items-center gap-6 mb-8">
-          <p className="text-white text-base font-normal leading-6 max-w-[500px]">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-4 lg:gap-6 mb-6 lg:mb-8">
+          <p className="text-white text-sm lg:text-base font-normal leading-6 max-w-[500px] text-center lg:text-left">
             Feel free to send us your questions or request a free consultation.
           </p>
-          <span className="text-white text-2xl">/</span>
-          <p className="text-white/80 text-sm font-normal leading-5 max-w-[380px]">
+          <span className="hidden lg:block text-white text-2xl">/</span>
+          <p className="text-white/80 text-xs lg:text-sm font-normal leading-5 max-w-[380px] text-center lg:text-left">
             It is necessary to wash the car before tinting, as it affects the quality of the work.
           </p>
         </div>
 
-        <button className="bg-white rounded-full px-6 py-3 text-[#5A666E] text-sm font-medium cursor-pointer hover:bg-white/90 transition-colors">
-          Send a Message
-        </button>
+        <div className="flex justify-center lg:justify-start">
+          <button className="bg-white rounded-full px-6 py-3 text-[#5A666E] text-sm font-medium cursor-pointer hover:bg-white/90 transition-colors">
+            Send a Message
+          </button>
+        </div>
       </div>
 
-      {/* Navigation Links */}
-      <div className="mb-12">
-        <ul className="flex gap-12 list-none m-0 p-0">
+      {/* Navigation Links - Hidden on mobile */}
+      <div className="hidden sm:block mb-8 lg:mb-12">
+        <ul className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6 lg:gap-12 list-none m-0 p-0">
           {navLinks.map((link) => (
             <li key={link.label}>
               <a
                 href={link.href}
-                className="text-[16px] font-medium text-white no-underline hover:text-white/80 transition-colors leading-6 text-center"
+                className="text-[14px] lg:text-[16px] font-medium text-white no-underline hover:text-white/80 transition-colors leading-6 text-center"
                 style={{ letterSpacing: '0.005em' }}
               >
                 {link.label}
@@ -49,25 +51,25 @@ export default function Footer() {
       </div>
 
       {/* Contact Info & Logo */}
-      <div className="flex justify-between items-start mb-12">
+      <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-8 lg:gap-0 mb-8 lg:mb-12">
         {/* Contact Info */}
-        <div className="flex gap-16">
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 lg:gap-16 text-center sm:text-left">
           {/* Phone */}
           <div>
             <p className="text-xs font-medium text-white/70 leading-4 mb-2">PHONE</p>
-            <p className="text-base font-medium text-white leading-6">+92 321 9839506</p>
+            <p className="text-sm lg:text-base font-medium text-white leading-6">+92 321 9839506</p>
           </div>
 
           {/* Email */}
           <div>
             <p className="text-xs font-medium text-white/70 leading-4 mb-2">EMAIL</p>
-            <p className="text-base font-medium text-white leading-6">learn@aisanctuary.org</p>
+            <p className="text-sm lg:text-base font-medium text-white leading-6">learn@aisanctuary.org</p>
           </div>
 
           {/* Location */}
           <div>
             <p className="text-xs font-medium text-white/70 leading-4 mb-2">Location</p>
-            <p className="text-base font-medium text-white leading-6">
+            <p className="text-sm lg:text-base font-medium text-white leading-6">
               Office#230 M Dubai Tower Khanna pull<br />
               Islamabad Pakistan
             </p>
@@ -75,16 +77,16 @@ export default function Footer() {
         </div>
 
         {/* Logo Section */}
-        <div className="text-right">
-          <div className="flex items-center gap-3 justify-end mb-4">
+        <div className="text-center lg:text-right">
+          <div className="flex items-center gap-3 justify-center lg:justify-end mb-4">
             <img
               src={`${process.env.PUBLIC_URL}/images/looogo.png`}
               alt="AI Sanctuary"
-              className="h-14 w-auto"
+              className="h-10 lg:h-14 w-auto"
             />
            
           </div>
-          <p className="text-xs font-normal text-white/70 max-w-[240px] ml-auto">
+          <p className="text-xs font-normal text-white/70 max-w-[240px] mx-auto lg:ml-auto lg:mr-0">
             Don't know where to get your car tinted?<br />
             Logoipsum — practical, safe, and affordable.
           </p>
@@ -92,7 +94,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom Section - Social Icons & Copyright */}
-      <div className="flex justify-between items-center border-t border-white/20 pt-6">
+      <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4 sm:gap-0 border-t border-white/20 pt-6">
         {/* Social Icons */}
         <div className="flex gap-4">
           {/* Facebook */}

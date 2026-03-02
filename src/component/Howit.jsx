@@ -24,66 +24,41 @@ const steps = [
   },
 ];
 
-const numberStyle = {
-  fontSize: 48,
-  fontWeight: 700,
-  fontFamily: 'Manrope, sans-serif',
-  lineHeight: '100%',
-  margin: 0,
-  textAlign: 'right',
-  color: '#2C5FE3',
-};
-
-const cardTitle = {
-  maxWidth: 402,
-  fontSize: 24,
-  fontWeight: 600,
-  lineHeight: '32px',
-  color: '#1B1D21',
-  letterSpacing: '0.005em',
-  margin: 0,
-  fontFamily: 'Inter, sans-serif',
-};
-
-const cardDesc = {
-  maxWidth: 402,
-  fontSize: 18,
-  lineHeight: '28px',
-  fontWeight: 400,
-  color: '#6B7280',
-  letterSpacing: '0.005em',
-  margin: 0,
-  fontFamily: 'Inter, sans-serif',
-};
-
 export default function Howit() {
   return (
-    <section style={{ padding: '64px 80px', background: '#fff' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 48 }}>
+    <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
+      <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
         <Heading2>How It Works</Heading2>
         <Description className="text-center">
           Learning With Ai Sanctuary is Simple & Supportive
         </Description>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 32 }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {steps.map((step, index) => (
           <div
             key={index}
-            style={{
-              background: '#fff',
-              borderRadius: 12,
-              padding: 32,
-              minHeight: 200,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 16,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            }}
+            className="bg-white rounded-xl p-5 sm:p-6 lg:p-8 flex flex-col gap-3 sm:gap-4 shadow-sm"
+            style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)' }}
           >
-            <p style={numberStyle}>{step.number}</p>
-            <h3 style={cardTitle}>{step.title}</h3>
-            <p style={cardDesc}>{step.description}</p>
+            <p
+              className="text-[32px] sm:text-[40px] lg:text-[48px] font-bold text-right text-[#2C5FE3] m-0 leading-none"
+              style={{ fontFamily: 'Manrope, sans-serif' }}
+            >
+              {step.number}
+            </p>
+            <h3
+              className="text-lg sm:text-xl lg:text-2xl font-semibold text-[#1B1D21] m-0"
+              style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.005em', lineHeight: '1.3' }}
+            >
+              {step.title}
+            </h3>
+            <p
+              className="text-sm sm:text-base lg:text-lg font-normal text-[#6B7280] m-0"
+              style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.005em', lineHeight: '1.6' }}
+            >
+              {step.description}
+            </p>
           </div>
         ))}
       </div>

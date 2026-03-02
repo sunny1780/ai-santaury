@@ -1,33 +1,6 @@
 import Heading2 from './Headings';
 import Description from './Descriptions';
 
-const nameStyle = {
-  fontSize: 18,
-  fontWeight: 600,
-  color: '#1B1D21',
-  fontFamily: 'Manrope, sans-serif',
-  lineHeight: '24px',
-  margin: 0,
-};
-
-const roleStyle = {
-  fontSize: 14,
-  fontWeight: 500,
-  color: '#6B7280',
-  fontFamily: 'Inter, sans-serif',
-  lineHeight: '20px',
-  margin: 0,
-};
-
-const descStyle = {
-  fontSize: 14,
-  fontWeight: 400,
-  color: '#6B7280',
-  fontFamily: 'Inter, sans-serif',
-  lineHeight: '20px',
-  margin: 0,
-};
-
 const teamMembers = [
   {
     name: 'Faizan Rasool',
@@ -86,46 +59,45 @@ const teamMembers = [
 ];
 
 const TeamCard = ({ name, role, description, image }) => (
-  <div
-    style={{
-      background: '#fff',
-      borderRadius: 16,
-      overflow: 'hidden',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-    }}
-  >
+  <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
     {/* Image */}
-    <div
-      style={{
-        height: 240,
-        overflow: 'hidden',
-      }}
-    >
+    <div className="h-72 sm:h-52 lg:h-60 overflow-hidden">
       <img
         src={`${process.env.PUBLIC_URL}/images/team/${image}`}
         alt={name}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-        }}
+        className="w-full h-full object-cover"
       />
     </div>
 
     {/* Content */}
-    <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <h3 style={nameStyle}>{name}</h3>
-      <p style={roleStyle}>{role}</p>
-      <p style={descStyle}>{description}</p>
+    <div className="p-4 sm:p-5 flex flex-col gap-2">
+      <h3
+        className="text-base sm:text-lg font-semibold text-[#1B1D21] m-0"
+        style={{ fontFamily: 'Manrope, sans-serif', lineHeight: '24px' }}
+      >
+        {name}
+      </h3>
+      <p
+        className="text-xs sm:text-sm font-medium text-[#6B7280] m-0"
+        style={{ fontFamily: 'Inter, sans-serif', lineHeight: '20px' }}
+      >
+        {role}
+      </p>
+      <p
+        className="text-xs sm:text-sm font-normal text-[#6B7280] m-0"
+        style={{ fontFamily: 'Inter, sans-serif', lineHeight: '20px' }}
+      >
+        {description}
+      </p>
     </div>
   </div>
 );
 
 export default function OurLeadership() {
   return (
-    <section style={{ padding: '64px 80px', background: '#F5F8FF' }}>
+    <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F5F8FF]">
       {/* Header */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginBottom: 48 }}>
+      <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
         <Heading2>Our Leadership</Heading2>
         <Description className="text-center">
           Dedicated volunteers working tirelessly to make Mrija Norway a welcoming home for our community
@@ -133,7 +105,7 @@ export default function OurLeadership() {
       </div>
 
       {/* Team Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
         {teamMembers.map((member, index) => (
           <TeamCard key={index} {...member} />
         ))}

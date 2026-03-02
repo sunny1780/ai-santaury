@@ -1,35 +1,3 @@
-const titleStyle = {
-  maxWidth: 226,
-  fontSize: 20,
-  fontWeight: 600,
-  lineHeight: '28px',
-  color: '#1B1D21',
-  letterSpacing: '0.005em',
-  margin: 0,
-  fontFamily: 'Manrope, sans-serif',
-};
-
-const descStyle = {
-  maxWidth: 226.67,
-  fontSize: 16,
-  fontWeight: 500,
-  lineHeight: '24px',
-  color: '#6B7280',
-  letterSpacing: '0.005em',
-  margin: 0,
-  fontFamily: 'Manrope, sans-serif',
-};
-
-const headingStyle = {
-  fontSize: 48,
-  fontWeight: 600,
-  lineHeight: '100%',
-  color: '#162D66',
-  letterSpacing: '0.005em',
-  margin: 0,
-  fontFamily: 'Manrope, sans-serif',
-};
-
 const features = [
   {
     icon: '11.svg',
@@ -59,40 +27,69 @@ const features = [
 ];
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div
-    style={{
-      background: '#fff',
-      borderRadius: 12,
-      padding: 24,
-      display: 'flex',
-      gap: 16,
-      alignItems: 'flex-start',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-    }}
-  >
-    <div style={{ flexShrink: 0 }}>
+  <div className="bg-white rounded-xl p-4 sm:p-6 flex gap-3 sm:gap-4 items-start shadow-sm">
+    <div className="flex-shrink-0">
       <img
         src={`${process.env.PUBLIC_URL}/images/${icon}`}
         alt=""
-        style={{ width: 40, height: 40 }}
+        className="w-8 h-8 sm:w-10 sm:h-10"
       />
     </div>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <h3 style={titleStyle}>{title}</h3>
-      <p style={descStyle}>{description}</p>
+    <div className="flex flex-col gap-2">
+      <h3
+        className="text-base sm:text-lg lg:text-xl font-semibold text-[#1B1D21] m-0"
+        style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '1.4' }}
+      >
+        {title}
+      </h3>
+      <p
+        className="text-sm sm:text-base font-medium text-[#6B7280] m-0"
+        style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '1.5' }}
+      >
+        {description}
+      </p>
     </div>
   </div>
 );
 
 export default function BuildSkills() {
   return (
-    <section style={{ padding: '64px 80px', background: '#fff' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+    <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
+      {/* Mobile Layout */}
+      <div className="lg:hidden flex flex-col gap-6">
+        {/* Heading */}
+        <h2
+          className="text-[32px] sm:text-[40px] font-semibold text-[#162D66] text-center sm:text-left"
+          style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '100%', margin: 0 }}
+        >
+          Build Skills<br />That Matter
+        </h2>
+        
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {features.map((feature, index) => (
+            <FeatureCard key={index} {...feature} />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Layout - unchanged */}
+      <div className="hidden lg:grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
         {/* Column 1 */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* Heading */}
           <div style={{ paddingRight: 24, paddingTop: 40 }}>
-            <h2 style={headingStyle}>
+            <h2
+              style={{
+                fontSize: 48,
+                fontWeight: 600,
+                lineHeight: '100%',
+                color: '#162D66',
+                letterSpacing: '0.005em',
+                margin: 0,
+                fontFamily: 'Manrope, sans-serif',
+              }}
+            >
               Build Skills<br />That Matter
             </h2>
           </div>

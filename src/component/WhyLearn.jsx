@@ -1,24 +1,6 @@
 import Heading2 from './Headings';
 import Description from './Descriptions';
 
-const statNumber = {
-  fontSize: 48,
-  fontWeight: 700,
-  color: '#2C5FE3',
-  fontFamily: 'Manrope, sans-serif',
-  lineHeight: '100%',
-  margin: 0,
-};
-
-const statLabel = {
-  fontSize: 16,
-  fontWeight: 400,
-  color: '#6B7280',
-  fontFamily: 'Inter, sans-serif',
-  lineHeight: '24px',
-  margin: 0,
-};
-
 const stats = [
   { number: '100+', label: 'Enrolled\nLearners' },
   { number: '4+', label: 'Classes\nCompleted' },
@@ -27,41 +9,50 @@ const stats = [
 
 export default function WhyLearn() {
   return (
-    <section style={{ padding: '64px 80px', background: '#F5F8FF' }}>
-      <div style={{ display: 'flex', gap: 64, alignItems: 'center' }}>
+    <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F5F8FF]">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
         {/* Left: Image */}
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+        <div className="w-full lg:flex-1 flex justify-center lg:justify-end order-first lg:order-none">
           <img
             src={`${process.env.PUBLIC_URL}/images/comp.png`}
             alt="Learning with laptop"
-            style={{ width: '100%', maxWidth: 400, borderRadius: 16, objectFit: 'cover' }}
+            className="w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] rounded-2xl object-cover"
           />
         </div>
 
         {/* Right: Text Content */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 24, alignItems: 'flex-start' }}>
+        <div className="w-full lg:flex-1 flex flex-col gap-4 lg:gap-6 items-center lg:items-start text-center lg:text-left">
           <h2
             className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] leading-[100%] font-semibold text-[#162D66]"
             style={{
               fontFamily: 'Manrope, sans-serif',
               letterSpacing: '0.005em',
               fontWeight: 600,
-              textAlign: 'left',
               margin: 0,
             }}
           >
             Why Learn With Us?
           </h2>
-          <Description>
+          <Description className="text-center lg:text-left">
             You Can Learn Smarter, Grow Faster
           </Description>
 
           {/* Stats Row */}
-          <div style={{ display: 'flex', gap: 80, marginTop: 24 }}>
+          <div className="flex flex-wrap justify-center lg:justify-start gap-8 sm:gap-12 lg:gap-20 mt-4 lg:mt-6">
             {stats.map((stat, index) => (
-              <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <p style={statNumber}>{stat.number}</p>
-                <p style={{ ...statLabel, whiteSpace: 'pre-line' }}>{stat.label}</p>
+              <div key={index} className="flex flex-col gap-2 items-center lg:items-start">
+                <p
+                  className="text-[32px] sm:text-[40px] lg:text-[48px] font-bold text-[#2C5FE3] m-0 leading-none"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}
+                >
+                  {stat.number}
+                </p>
+                <p
+                  className="text-sm lg:text-base font-normal text-[#6B7280] m-0 whitespace-pre-line text-center lg:text-left"
+                  style={{ fontFamily: 'Inter, sans-serif', lineHeight: '24px' }}
+                >
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
