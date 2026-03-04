@@ -98,9 +98,9 @@ export default function OurLeadership() {
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F5F8FF]">
       {/* Header */}
       <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
-        <Heading2>Our Leadership</Heading2>
+        <Heading2>Our Dedicated Team</Heading2>
         <Description className="text-center">
-          Dedicated volunteers working tirelessly to make Mrija Norway a welcoming home for our community
+        Passionate experts and volunteers are building an inclusive community for digital learning and growth in Pakistan.
         </Description>
       </div>
 

@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './component/Navbar';
 import Hero from './component/Hero';
 import OurCourses from './component/OurCourses';
@@ -8,10 +9,13 @@ import OurInstructors from './component/OurInstructors';
 import OurLeadership from './component/OurLeadership';
 import HomeFaqs from './component/HomeFaqs';
 import Footer from './component/Footer';
+import OurEvents from './pages/OurEvents';
+import About from './pages/About';
+import Courses from './pages/Courses';
 
-function App() {
+function HomePage() {
   return (
-    <div>
+    <>
       <Navbar />
       <Hero />
       <OurCourses />
@@ -22,7 +26,20 @@ function App() {
       <OurInstructors />
       <HomeFaqs />
       <Footer />
-    </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/events" element={<OurEvents />} />
+        <Route path="/courses" element={<Courses />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
