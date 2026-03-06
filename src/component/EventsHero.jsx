@@ -31,59 +31,59 @@ export default function EventsHero() {
           </Description>
         </div>
 
-        {/* Mobile Layout */}
+        {/* Mobile Layout - 1, 2, 3 */}
         <div className="lg:hidden flex flex-col gap-4">
           <div className="rounded-xl overflow-hidden bg-[#D3DBE0] aspect-square max-w-[280px] mx-auto w-full">
             <img
-              src={`${process.env.PUBLIC_URL}/images/comp.png`}
-              alt="Event"
+              src={`${process.env.PUBLIC_URL}/images/one.png`}
+              alt="Event 1"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="rounded-xl overflow-hidden bg-[#D3DBE0] aspect-[16/9] w-full">
             <img
-              src={`${process.env.PUBLIC_URL}/images/Hero.png`}
-              alt="Event"
+              src={`${process.env.PUBLIC_URL}/images/two.png`}
+              alt="Event 2"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="rounded-xl overflow-hidden bg-[#D3DBE0] min-h-[250px] w-full">
             <img
-              src={`${process.env.PUBLIC_URL}/images/peoples.png`}
-              alt="Event"
+              src={`${process.env.PUBLIC_URL}/images/three.png`}
+              alt="Event 3"
               className="w-full h-full object-cover"
             />
           </div>
         </div>
 
-        {/* Desktop Layout - Unchanged */}
+        {/* Desktop Layout - Left: 1 & 2, Right: 3 */}
         <div className="hidden lg:flex flex-row gap-6">
-          {/* Left div - 2 images, right aligned */}
+          {/* Left - image 1 aur 2 */}
           <div className="flex-1 flex justify-end">
             <div className="flex flex-col gap-6 items-end">
               <div className="rounded-xl overflow-hidden bg-[#D3DBE0] w-[305px] h-[215.5px]">
                 <img
-                  src={`${process.env.PUBLIC_URL}/images/comp.png`}
-                  alt="Event"
+                  src={`${process.env.PUBLIC_URL}/images/one.png`}
+                  alt="Event 1"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-xl overflow-hidden bg-[#D3DBE0] w-[502px] h-[215.5px]">
                 <img
-                  src={`${process.env.PUBLIC_URL}/images/Hero.png`}
-                  alt="Event"
+                  src={`${process.env.PUBLIC_URL}/images/two.png`}
+                  alt="Event 2"
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
           </div>
 
-          {/* Right div - 1 image, left aligned */}
+          {/* Right - image 3 */}
           <div className="flex-1 flex justify-start">
             <div className="rounded-xl overflow-hidden bg-[#D3DBE0] w-[502px] h-[452px]">
               <img
-                src={`${process.env.PUBLIC_URL}/images/peoples.png`}
-                alt="Event"
+                src={`${process.env.PUBLIC_URL}/images/three.png`}
+                alt="Event 3"
                 className="w-full h-full object-cover"
               />
             </div>

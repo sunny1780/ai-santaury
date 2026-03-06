@@ -1,7 +1,7 @@
 import Heading2 from './Headings';
 import Description from './Descriptions';
 
-const galleryItems = [1, 2, 3, 4];
+const galleryItems = ['g1.png', 'g2.png', 'g3.png', 'g4.png'];
 
 export default function OurGallery() {
   return (
@@ -15,11 +15,18 @@ export default function OurGallery() {
 
       {/* Gallery Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-[1200px] mx-auto mb-8">
-        {galleryItems.map((_, index) => (
+        {galleryItems.map((img, index) => (
           <div
-            key={index}
-            className="rounded-xl bg-[#D3DBE0] aspect-[3/4] min-h-[180px]"
-          />
+            key={img}
+            className="rounded-xl bg-[#D3DBE0] aspect-[3/4] min-h-[180px] overflow-hidden"
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/images/${img}`}
+              alt={`Gallery ${index + 1}`}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
         ))}
       </div>
 

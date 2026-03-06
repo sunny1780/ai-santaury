@@ -12,6 +12,7 @@ import Footer from './component/Footer';
 import OurEvents from './pages/OurEvents';
 import About from './pages/About';
 import Courses from './pages/Courses';
+import ThreeDays from './pages/ThreeDays';
 
 function HomePage() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<OurEvents />} />
         <Route path="/courses" element={<Courses />} />
+        <Route path="/three-days" element={<ThreeDays />} />
       </Routes>
     </BrowserRouter>
   );
