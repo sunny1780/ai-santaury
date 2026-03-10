@@ -128,11 +128,11 @@ export default function Contactus() {
                     Phone
                   </p>
                   <a
-                    href="tel:+923219839506"
+                    href="tel:+923175442479"
                     className="text-[14px] leading-[20px] font-normal text-[#5A666E] no-underline"
                     style={{ fontFamily: 'Rubik, sans-serif', letterSpacing: '0.005em', fontWeight: 400 }}
                   >
-                    +92 321 9839506
+                    +92 317 5442479
                   </a>
                 </div>
               </div>

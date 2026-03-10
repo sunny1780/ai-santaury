@@ -1,4 +1,3 @@
-import Heading2 from './Headings';
 import Description from './Descriptions';
 
 const stats = [

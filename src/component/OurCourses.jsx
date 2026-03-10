@@ -52,23 +52,6 @@ const FigmaIcon = () => (
   </svg>
 );
 
-const PeoplePlaceholder = () => (
-  <div style={{ width: '100%', height: '100%', background: '#374151', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-      <circle cx="22" cy="18" r="10" fill="#9CA3AF"/>
-      <path d="M2 50c0-11 9-20 20-20s20 9 20 20" fill="#9CA3AF"/>
-      <circle cx="42" cy="18" r="8" fill="#6B7280"/>
-      <path d="M30 50c0-9 6.7-16.3 15-19" stroke="#6B7280" strokeWidth="2"/>
-    </svg>
-  </div>
-);
-
-const ImageIcon = () => (
-  <svg width="20" height="20" fill="none" stroke="#9CA3AF" strokeWidth="1.5" viewBox="0 0 24 24">
-    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
-  </svg>
-);
-
 const baseCard = {
   background: '#fff',
   borderRadius: 12,
