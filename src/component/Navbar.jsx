@@ -6,11 +6,6 @@ const navLinks = [
   { label: "About Us", href: "/about" },
   { label: "Courses", href: "/courses" },
   { label: "Events", href: "/events" },
-  { label: "Three Days", href: "/three-days" },
-  { label: "UI/UX", href: "/uiux" },
-  { label: "Python", href: "/python" },
-  { label: "Website", href: "/website" },
-  { label: "SEO", href: "/seo" },
   { label: "Contact Us", href: "/contact" },
 ];
 
