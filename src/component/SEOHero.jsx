@@ -1,7 +1,7 @@
 export default function SEOHero() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-8 sm:py-12 lg:py-16 bg-white">
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1080px] mx-auto">
         {/* Top - Image */}
         <div className="w-full rounded-xl overflow-hidden mb-8 lg:mb-10">
           <img

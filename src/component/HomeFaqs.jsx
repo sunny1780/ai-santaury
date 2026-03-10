@@ -76,7 +76,7 @@ export default function HomeFaqs() {
       </div>
 
       {/* FAQ List */}
-      <div className="max-w-[800px] mx-auto">
+      <div className="max-w-[1080px] mx-auto">
         {faqs.map((faq, index) => (
           <FaqItem
             key={index}

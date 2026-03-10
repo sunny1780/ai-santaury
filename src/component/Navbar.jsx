@@ -13,7 +13,8 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="relative flex items-center justify-between w-full px-4 sm:px-8 lg:px-[80px] py-4 bg-white">
+    <nav className="relative w-full px-4 sm:px-8 lg:px-[80px] py-4 bg-white">
+      <div className="max-w-[1080px] mx-auto flex items-center justify-between">
       {/* Logo */}
       <Link to="/" className="flex items-center gap-3">
         <img
@@ -58,6 +59,7 @@ export default function Navbar() {
         <span className={`w-6 h-0.5 bg-[#162D66] transition-all ${isMenuOpen ? 'opacity-0' : ''}`}></span>
         <span className={`w-6 h-0.5 bg-[#162D66] transition-all ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
       </button>
+      </div>
 
       {/* Mobile Navigation */}
       {isMenuOpen && (

@@ -11,6 +11,7 @@ const navLinks = [
 export default function Footer() {
   return (
     <footer className="bg-[#285ADE] px-4 sm:px-8 lg:px-[80px] pt-10 lg:pt-16 pb-6 lg:pb-8">
+      <div className="max-w-[1080px] mx-auto">
       {/* Top Section - Questions */}
       <div className="mb-10 lg:mb-16">
         <h2 className="font-bold text-white text-[28px] sm:text-[36px] lg:text-[48px] leading-[100%] mb-4 lg:mb-6 text-center lg:text-left">
@@ -133,6 +134,7 @@ export default function Footer() {
         <p className="text-xs font-normal text-white/70">
           © 2026 Ai Sanctuary - All Rights Reserved
         </p>
+      </div>
       </div>
     </footer>
   );

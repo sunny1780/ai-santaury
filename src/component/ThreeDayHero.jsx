@@ -20,7 +20,7 @@ export default function ThreeDayHero() {
 
       {/* Content - only image */}
       <div className="relative z-10 flex justify-center">
-        <div className="w-full max-w-[1024px] h-[200px] sm:h-[280px] md:h-[360px] lg:h-[452px] rounded-xl overflow-hidden bg-[#D3DBE0] shadow-sm">
+        <div className="w-full max-w-[1080px] h-[200px] sm:h-[280px] md:h-[360px] lg:h-[452px] rounded-xl overflow-hidden bg-[#D3DBE0] shadow-sm">
           <img
             src={`${process.env.PUBLIC_URL}/images/banner.svg`}
             alt="3-Day Challenge banner"

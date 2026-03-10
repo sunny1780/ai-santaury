@@ -134,7 +134,7 @@ export default function OurCoursesall() {
       </div>
 
       {/* Content */}
-      <div className="relative z-[2]">
+      <div className="relative z-[2] max-w-[1080px] mx-auto">
         <div className="flex flex-col items-center gap-4 mb-12">
           <Heading2>Our Courses</Heading2>
           <Description className="text-center max-w-[500px]">

@@ -27,23 +27,23 @@ const features = [
 ];
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="bg-white rounded-xl p-4 sm:p-6 flex gap-3 sm:gap-4 items-start shadow-sm">
+  <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 lg:p-6 flex gap-2.5 sm:gap-3 md:gap-4 items-start shadow-sm min-w-0">
     <div className="flex-shrink-0">
       <img
         src={`${process.env.PUBLIC_URL}/images/${icon}`}
         alt=""
-        className="w-8 h-8 sm:w-10 sm:h-10"
+        className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
       />
     </div>
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1.5 sm:gap-2 min-w-0 flex-1">
       <h3
-        className="text-base sm:text-lg lg:text-xl font-semibold text-[#1B1D21] m-0"
+        className="text-[15px] sm:text-base md:text-lg lg:text-xl font-semibold text-[#1B1D21] m-0"
         style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '1.4' }}
       >
         {title}
       </h3>
       <p
-        className="text-sm sm:text-base font-medium text-[#6B7280] m-0"
+        className="text-[13px] sm:text-sm md:text-base font-medium text-[#6B7280] m-0"
         style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '1.5' }}
       >
         {description}
@@ -54,12 +54,13 @@ const FeatureCard = ({ icon, title, description }) => (
 
 export default function BuildSkills() {
   return (
-    <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
+    <section className="px-4 sm:px-6 md:px-8 lg:px-[80px] py-8 sm:py-10 md:py-12 lg:py-16 bg-white">
+      <div className="max-w-[1080px] mx-auto">
       {/* Mobile Layout */}
-      <div className="lg:hidden flex flex-col gap-6">
+      <div className="lg:hidden flex flex-col gap-4 sm:gap-5 md:gap-6">
         {/* Heading */}
         <h2
-          className="text-[32px] sm:text-[40px] font-semibold text-[#162D66] text-center sm:text-left"
+          className="text-[28px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-semibold text-[#162D66] text-center sm:text-left"
           style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '100%', margin: 0 }}
         >
           Grow Confidently in Your Sanctuary
@@ -73,43 +74,37 @@ export default function BuildSkills() {
         </div>
       </div>
 
-      {/* Desktop Layout - unchanged */}
-      <div className="hidden lg:grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+      {/* Desktop Layout */}
+      <div className="hidden lg:grid lg:gap-4 xl:gap-6" style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
         {/* Column 1 */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div className="flex flex-col gap-4 xl:gap-6 min-w-0">
           {/* Heading */}
-          <div style={{ paddingRight: 24, paddingTop: 40 }}>
+          <div className="pr-4 xl:pr-6 pt-6 xl:pt-10">
             <h2
-              style={{
-                fontSize: 48,
-                fontWeight: 600,
-                lineHeight: '100%',
-                color: '#162D66',
-                letterSpacing: '0.005em',
-                margin: 0,
-                fontFamily: 'Manrope, sans-serif',
-              }}
+              className="text-[40px] xl:text-[48px] font-semibold text-[#162D66] m-0 leading-[100%]"
+              style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em' }}
             >
               Grow Confidently in Your Sanctuary
             </h2>
           </div>
           {/* Feature Card */}
-          <div style={{ paddingTop: 24 }}>
+          <div className="pt-4 xl:pt-6">
             <FeatureCard {...features[2]} />
           </div>
         </div>
 
         {/* Column 2 */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div className="flex flex-col gap-4 xl:gap-6 min-w-0">
           <FeatureCard {...features[0]} />
           <FeatureCard {...features[3]} />
         </div>
 
         {/* Column 3 */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div className="flex flex-col gap-4 xl:gap-6 min-w-0">
           <FeatureCard {...features[1]} />
           <FeatureCard {...features[4]} />
         </div>
+      </div>
       </div>
     </section>
   );

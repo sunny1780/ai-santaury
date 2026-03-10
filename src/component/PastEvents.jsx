@@ -71,17 +71,19 @@ const EventCard = ({ href, ...rest }) => {
 export default function PastEvents() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F8FAFC]">
-      <div className="flex flex-col items-center gap-4 mb-10 lg:mb-12">
-        <Heading2>Past Events</Heading2>
-        <Description className="text-center">
-          Browse our previous community events and get inspired
-        </Description>
-      </div>
+      <div className="max-w-[1080px] mx-auto">
+        <div className="flex flex-col items-center gap-4 mb-10 lg:mb-12">
+          <Heading2>Past Events</Heading2>
+          <Description className="text-center">
+            Browse our previous community events and get inspired
+          </Description>
+        </div>
 
-      <div className="flex flex-col md:flex-row md:flex-wrap md:justify-center gap-6 max-w-[1100px] mx-auto">
+        <div className="flex flex-col md:flex-row md:flex-wrap md:justify-center gap-6">
         {events.map((event, index) => (
           <EventCard key={index} {...event} />
         ))}
+        </div>
       </div>
     </section>
   );

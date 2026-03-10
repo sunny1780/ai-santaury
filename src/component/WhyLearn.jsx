@@ -9,7 +9,7 @@ const stats = [
 export default function WhyLearn() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F5F8FF]">
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+      <div className="max-w-[1080px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
         {/* Left: Image */}
         <div className="w-full lg:flex-1 flex justify-center lg:justify-end order-first lg:order-none">
           <img

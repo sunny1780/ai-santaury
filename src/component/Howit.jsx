@@ -27,6 +27,7 @@ const steps = [
 export default function Howit() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
+      <div className="max-w-[1080px] mx-auto">
       <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
         <Heading2>How It Works</Heading2>
         <Description className="text-center">
@@ -61,6 +62,7 @@ export default function Howit() {
             </p>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

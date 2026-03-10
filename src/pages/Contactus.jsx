@@ -35,7 +35,7 @@ export default function Contactus() {
         </div>
 
         {/* Form + Map */}
-        <div className="flex flex-col lg:flex-row gap-8 sm:gap-10 lg:gap-16 max-w-[1100px] mx-auto">
+        <div className="flex flex-col lg:flex-row gap-8 sm:gap-10 lg:gap-16 max-w-[1080px] mx-auto">
           {/* Left - Form */}
           <div className="flex-1">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">

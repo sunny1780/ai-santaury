@@ -22,7 +22,7 @@ export default function EventsHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-[1080px] mx-auto">
         {/* Text Content - Centered */}
         <div className="flex flex-col items-center gap-4 mb-8 lg:mb-16">
           <Heading2>Our Events</Heading2>

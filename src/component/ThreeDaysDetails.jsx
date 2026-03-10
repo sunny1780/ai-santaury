@@ -11,7 +11,7 @@ const bulletPoints = [
 export default function ThreeDaysDetails() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
-      <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 max-w-[1120px] mx-auto items-start">
+      <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 max-w-[1080px] mx-auto items-start">
         {/* Left: Heading + intro + image */}
         <div className="flex-1 flex flex-col gap-6 max-w-[520px]">
           <div className="flex flex-col gap-3">

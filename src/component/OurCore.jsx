@@ -65,7 +65,7 @@ const ValueItem = ({ icon, title, description }) => (
 export default function OurCore() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+      <div className="max-w-[1080px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
         {/* Left Column */}
         <div className="flex-1 flex flex-col gap-6">
           <Heading2 className="!text-left">Our Core Values</Heading2>

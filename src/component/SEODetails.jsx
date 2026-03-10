@@ -27,7 +27,7 @@ const headingStyle = {
 export default function SEODetails() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-white">
-      <div className="max-w-[1200px] mx-auto flex flex-col gap-10">
+      <div className="max-w-[1080px] mx-auto flex flex-col gap-10">
         {/* Description */}
         <div>
           <h3

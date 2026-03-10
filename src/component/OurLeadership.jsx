@@ -96,6 +96,7 @@ const TeamCard = ({ name, role, description, image }) => (
 export default function OurLeadership() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F5F8FF]">
+      <div className="max-w-[1080px] mx-auto">
       {/* Header */}
       <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
         <Heading2>Our Dedicated Team</Heading2>
@@ -109,6 +110,7 @@ export default function OurLeadership() {
         {teamMembers.map((member, index) => (
           <TeamCard key={index} {...member} />
         ))}
+      </div>
       </div>
     </section>
   );

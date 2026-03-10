@@ -114,6 +114,7 @@ const MobileCard = ({ icon, title, description }) => (
 export default function OurCourses() {
   return (
     <section className="bg-[#F5F8FF]">
+      <div className="max-w-[1080px] mx-auto">
       {/* Mobile Layout */}
       <div className="lg:hidden px-4 sm:px-8 py-12">
         {/* Header */}
@@ -166,13 +167,13 @@ export default function OurCourses() {
         </div>
 
         {/* Main Layout: Left Grid + Right E-commerce Card */}
-        <div style={{ display: 'flex', gap: 24 }}>
+        <div style={{ display: 'flex', gap: 24, justifyContent: 'center' }}>
           {/* Left Side Grid */}
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {/* First Row: 3 small cards */}
-            <div style={{ display: 'flex', gap: 20, marginBottom: 24 }}>
+            <div style={{ display: 'flex', gap: 20, marginBottom: 24, justifyContent: 'center' }}>
               {courses.filter(c => [1, 2, 3].includes(c.id)).map((course) => (
-                <div key={course.id} style={{ ...baseCard, width: 280 }}>
+                <div key={course.id} style={{ ...baseCard, width: 256 }}>
                   <div style={iconBox}>
                     {icons[course.icon]}
                   </div>
@@ -183,7 +184,7 @@ export default function OurCourses() {
             </div>
 
             {/* Second Row: Figma wide card + Custom Development card */}
-            <div style={{ display: 'flex', gap: 20 }}>
+            <div style={{ display: 'flex', gap: 20, justifyContent: 'center', width: '100%', maxWidth: 808 }}>
               {/* Figma Wide Card */}
               <div
                 style={{
@@ -233,7 +234,7 @@ export default function OurCourses() {
               </div>
 
               {/* Custom Development Card */}
-              <div style={{ ...baseCard, width: 280, flexShrink: 0 }}>
+              <div style={{ ...baseCard, width: 256, flexShrink: 0 }}>
                 <div style={iconBox}>
                   <img 
                     src={`${process.env.PUBLIC_URL}/images/6.svg`} 
@@ -250,7 +251,7 @@ export default function OurCourses() {
           {/* Right Side: E-commerce Tall Card */}
           <div
             style={{
-              width: 280.7895,
+              width: 256.7895,
               height: 506,
               background: '#fff',
               borderRadius: 8.42,
@@ -278,6 +279,7 @@ export default function OurCourses() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

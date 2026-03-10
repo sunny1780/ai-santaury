@@ -10,15 +10,16 @@ const columns = [
 export default function ThreeDayGallery() {
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-8 sm:py-12 lg:py-16 bg-white">
-      <div className="flex flex-col items-center gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
-        <Heading2>Event Sneak peeks</Heading2>
-        <Description className="text-center">
-          Take a look at our recent community gatherings
-        </Description>
-      </div>
+      <div className="max-w-[1080px] mx-auto">
+        <div className="flex flex-col items-center gap-3 sm:gap-4 mb-8 sm:mb-10 lg:mb-12">
+          <Heading2>Event Sneak peeks</Heading2>
+          <Description className="text-center">
+            Take a look at our recent community gatherings
+          </Description>
+        </div>
 
-      {/* 3 divs: har div mein upar 1, neeche 1 image - mobile responsive */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 max-w-[1200px] mx-auto">
+        {/* 3 divs: har div mein upar 1, neeche 1 image - mobile responsive */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         {columns.map((imgs, colIndex) => (
           <div key={colIndex} className="flex flex-col gap-3 sm:gap-4">
             {imgs.map((src, i) => (
@@ -33,6 +34,7 @@ export default function ThreeDayGallery() {
             ))}
           </div>
         ))}
+        </div>
       </div>
     </section>
   );
