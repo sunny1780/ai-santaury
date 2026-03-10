@@ -32,7 +32,7 @@ const FeatureCard = ({ icon, title, description }) => (
       <img
         src={`${process.env.PUBLIC_URL}/images/${icon}`}
         alt=""
-        className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
+        className="w-9 h-9 object-contain"
       />
     </div>
     <div className="flex flex-col gap-1.5 sm:gap-2 min-w-0 flex-1">

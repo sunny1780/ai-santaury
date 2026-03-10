@@ -1,15 +1,24 @@
-const learnItems = [
-  'Create mobile app designs from scratch',
-  'Create mockups using Figma',
-  'Understand the differences between designing for iOS and Android',
-  'Start a new career as a UI/UX designer',
-  'Create wireframe designs for e-Commerce Project',
+const skillsItems = [
+  'Understand the core principles of user-centered design',
+  'Conduct user research, create personas, and map user journeys',
+  'Build wireframes and interactive prototypes in Figma',
+  'Design polished, modern interfaces for mobile and web',
+  'Apply typography, color theory, and layout principles with confidence',
+  'Test your designs with real users and improve based on feedback',
 ];
 
-const whoItems = [
-  'No pre-knowledge required - we\'ll teach you everything you need to know',
-  'A PC or Mac is required',
-  'No software is required in advance of the course (all software used in the course is free or has a demo version)',
+const courseForItems = [
+  'Beginners with no design experience who want to break into the field',
+  'Developers who want to understand and apply real design thinking',
+  'Entrepreneurs who want to design their own apps or digital products',
+  'Creative people looking for a structured, career-ready skill',
+  'Anyone transitioning into a digital design career',
+];
+
+const getStartedItems = [
+  'No prior design experience is needed; we start from the basics',
+  'Figma is completely free; no paid software is required',
+  'A notebook for sketching early ideas is recommended, but not mandatory',
 ];
 
 const bodyStyle = {
@@ -38,27 +47,27 @@ export default function UIUXDetails() {
           </h3>
           <div className="flex flex-col gap-3">
             <p className="text-[18px] leading-[28px] font-normal m-0" style={bodyStyle}>
-              Nothing feels better than creating something and earning from it. I got into Web Design because of the lifestyle it offered. I hacked myself into it and learned to make complex topics simple, fun, and result in quick wins as a Freelance Web Designer.
+              Great design is not just about making things look beautiful; it is about making them work beautifully. UI/UX Design is the art and science of creating digital experiences that feel intuitive, effortless, and meaningful to users. In today&apos;s competitive digital world, companies invest heavily in design because bad UX costs them customers, and great UX earns them loyalty.
             </p>
             <p className="text-[18px] leading-[28px] font-normal m-0" style={bodyStyle}>
-              This course teaches Figma for design (not Photoshop — it&apos;s needlessly complicated). You&apos;ll design a complete website in a week.
+              This course teaches you everything you need to become a confident UI/UX designer. You will learn how to research users, define problems, sketch ideas, build wireframes, create high-fidelity prototypes in Figma, and test your designs with real users. Most importantly, you will develop the thinking process behind every great design decision.
             </p>
             <p className="text-[18px] leading-[28px] font-normal m-0" style={bodyStyle}>
-              We teach Webflow for development (no heavy HTML & CSS coding). Build complex websites in two weeks. We also include a Freelancing course with a winning proposal template and a stunning portfolio website.
+              You do not need any design background to join. If you have a laptop, an eye for detail, and curiosity about how apps and websites are made, you are already ready. By the end, you will have a professional portfolio that can land you your first design job or freelance client.
             </p>
           </div>
         </div>
 
-        {/* What you'll learn */}
+        {/* Design Skills You'll Master */}
         <div>
           <h3
             className="text-xl font-semibold text-[#162D66] mb-4 m-0"
             style={headingStyle}
           >
-            What you&apos;ll learn
+            Design Skills You&apos;ll Master
           </h3>
           <ul className="list-none pl-0 m-0 flex flex-col gap-2">
-            {learnItems.map((item, index) => (
+            {skillsItems.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
                 <span className="text-[#326AFD] mt-1 flex-shrink-0">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -73,16 +82,16 @@ export default function UIUXDetails() {
           </ul>
         </div>
 
-        {/* Who this course is for */}
+        {/* Is This Course For You? */}
         <div>
           <h3
             className="text-xl font-semibold text-[#162D66] mb-4 m-0"
             style={headingStyle}
           >
-            Who this course is for:
+            Is This Course For You?
           </h3>
           <ul className="list-none pl-0 m-0 flex flex-col gap-2">
-            {whoItems.map((item, index) => (
+            {courseForItems.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
                 <span className="text-[#326AFD] mt-1 flex-shrink-0">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -97,16 +106,16 @@ export default function UIUXDetails() {
           </ul>
         </div>
 
-        {/* Requirement */}
+        {/* What You Need to Get Started */}
         <div>
           <h3
             className="text-xl font-semibold text-[#162D66] mb-4 m-0"
             style={headingStyle}
           >
-            Requirement
+            What You Need to Get Started
           </h3>
           <ul className="list-none pl-0 m-0 flex flex-col gap-2">
-            {whoItems.map((item, index) => (
+            {getStartedItems.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
                 <span className="text-[#326AFD] mt-1 flex-shrink-0">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
