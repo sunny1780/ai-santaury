@@ -1,6 +1,6 @@
 export default function ThreeDayHero() {
   return (
-    <section className="relative overflow-hidden px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16">
+    <section className="relative overflow-hidden px-4 sm:px-8 lg:px-[80px] py-8 sm:py-12 lg:py-16">
       {/* Gradient Background */}
       <div
         className="absolute inset-0"
@@ -20,7 +20,7 @@ export default function ThreeDayHero() {
 
       {/* Content - only image */}
       <div className="relative z-10 flex justify-center">
-        <div className="w-full max-w-[1024px] h-[452px] rounded-xl overflow-hidden bg-[#D3DBE0] shadow-sm">
+        <div className="w-full max-w-[1024px] h-[200px] sm:h-[280px] md:h-[360px] lg:h-[452px] rounded-xl overflow-hidden bg-[#D3DBE0] shadow-sm">
           <img
             src={`${process.env.PUBLIC_URL}/images/banner.svg`}
             alt="3-Day Challenge banner"

@@ -34,12 +34,12 @@ const icons = {
 };
 
 const courses = [
-  { id: 1, icon: 1, title: 'Web Design', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
-  { id: 2, icon: 2, title: 'UI/UX Design', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
-  { id: 3, icon: 3, title: 'Responsive Design', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
-  { id: 4, icon: 4, title: 'E commerce Solution', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
-  { id: 5, type: 'figma', title: 'UI/UX Design', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
-  { id: 6, type: 'peoples', title: 'Custom Development', description: 'From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.' },
+  { id: 1, icon: 1, title: 'SEO & Digital Growth', description: 'Optimize websites, analyze performance, and drive organic traffic.' },
+  { id: 2, icon: 2, title: 'English Communication', description: 'Develop fluency, confidence, and effective speaking for career advancement.' },
+  { id: 3, icon: 3, title: 'Python Programming', description: 'Craft visuals, branding, social content, and marketing materials.' },
+  { id: 4, icon: 4, title: 'MERN Development', description: 'Create full-stack applications with MongoDB, Express, React, and Node.js.' },
+  { id: 5, type: 'figma', title: 'UI/UX Design', description: 'Design modern interfaces using Figma, Adobe XD, and industry-standard tools.' },
+  { id: 6, type: 'peoples', title: 'AI Automation', description: 'Harness generative AI, ChatGPT, and automation to boost productivity.' },
 ];
 
 const FigmaIcon = () => (
@@ -136,15 +136,15 @@ export default function OurCourses() {
         {/* Header */}
         <div className="flex flex-col items-center gap-3 mb-8">
           <Heading2>Our Courses</Heading2>
-          <Description className="text-center">Learn, grow, and integrate into society</Description>
+          <Description className="text-center">Explore Our Programs</Description>
         </div>
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <MobileCard icon={1} title="Web Design" description="From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience." />
-          <MobileCard icon={2} title="UI/UX Design" description="From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience." />
-          <MobileCard icon={3} title="Responsive Design" description="From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience." />
-          <MobileCard icon={4} title="E-commerce Solution" description="From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience." />
+          <MobileCard icon={1} title="SEO & Digital Growth" description="Optimize websites, analyze performance, and drive organic traffic." />
+          <MobileCard icon={2} title="English Communication" description="Develop fluency, confidence, and effective speaking for career advancement." />
+          <MobileCard icon={3} title="Python Programming" description="Craft visuals, branding, social content, and marketing materials." />
+          <MobileCard icon={4} title="MERN Development" description="Create full-stack applications with MongoDB, Express, React, and Node.js." />
           
           {/* Figma Card */}
           <div className="bg-white rounded-xl p-5 flex flex-col gap-4 shadow-sm">
@@ -155,20 +155,20 @@ export default function OurCourses() {
               UI/UX Design
             </h3>
             <p className="text-xs font-medium text-[#6B7280] m-0 leading-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
-              From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.
+              Design modern interfaces using Figma, Adobe XD, and industry-standard tools.
             </p>
           </div>
 
-          {/* Custom Development Card */}
+          {/* AI & Automation Card */}
           <div className="bg-white rounded-xl p-5 flex flex-col gap-4 shadow-sm">
             <div className="w-12 h-12 rounded-xl bg-[#F5F8FF] flex items-center justify-center flex-shrink-0">
-              <img src={`${process.env.PUBLIC_URL}/images/6.svg`} alt="Custom Development" className="w-6 h-6" />
+              <img src={`${process.env.PUBLIC_URL}/images/6.svg`} alt="AI Automation" className="w-6 h-6" />
             </div>
             <h3 className="text-sm font-bold text-[#1B1D21] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
-              Custom Development
+              AI Automation
             </h3>
             <p className="text-xs font-medium text-[#6B7280] m-0 leading-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
-              From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.
+              Harness generative AI, ChatGPT, and automation to boost productivity.
             </p>
           </div>
         </div>
@@ -179,7 +179,7 @@ export default function OurCourses() {
         {/* Header */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, marginBottom: 48 }}>
           <Heading2>Our Courses</Heading2>
-          <Description className="text-center">Learn, grow, and integrate into society</Description>
+          <Description className="text-center">Explore Our Programs</Description>
         </div>
 
         {/* Main Layout: Left Grid + Right E-commerce Card */}
@@ -220,7 +220,7 @@ export default function OurCourses() {
                   </div>
                   <h3 style={cardTitle}>UI/UX Design</h3>
                   <p style={{ ...cardDesc, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.
+                    Design modern interfaces using Figma, Adobe XD, and industry-standard tools.
                   </p>
                 </div>
                 <div style={{
@@ -258,8 +258,8 @@ export default function OurCourses() {
                     style={{ width: 24, height: 24 }} 
                   />
                 </div>
-                <h3 style={cardTitle}>Custom Development</h3>
-                <p style={cardDesc}>From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.</p>
+                <h3 style={cardTitle}>AI Automation</h3>
+                <p style={cardDesc}>Harness generative AI, ChatGPT, and automation to boost productivity.</p>
               </div>
             </div>
           </div>
@@ -283,8 +283,8 @@ export default function OurCourses() {
               <div style={iconBox}>
                 {icons[4]}
               </div>
-              <h3 style={cardTitle}>E-commerce Solution</h3>
-              <p style={cardDesc}>From concept to launch, we create stunning, user-centric websites that elevate your brand and engage your audience.</p>
+              <h3 style={cardTitle}>MERN Development</h3>
+              <p style={cardDesc}>Create full-stack applications with MongoDB, Express, React, and Node.js.</p>
             </div>
             <div style={{ flex: 1, overflow: 'hidden', padding: 16 }}>
               <img

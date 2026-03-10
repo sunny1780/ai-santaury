@@ -31,10 +31,10 @@ export default function WhyLearn() {
               margin: 0,
             }}
           >
-            Why Learn With Us?
+            Why Ai Sanctuary Stands Out
           </h2>
           <Description className="text-center lg:text-left">
-            You Can Learn Smarter, Grow Faster
+            Learn smarter. Grow faster.
           </Description>
 
           {/* Stats Row */}
@@ -42,7 +42,7 @@ export default function WhyLearn() {
             {stats.map((stat, index) => (
               <div key={index} className="flex flex-col gap-2 items-center lg:items-start">
                 <p
-                  className="text-[32px] sm:text-[40px] lg:text-[48px] font-bold text-[#2C5FE3] m-0 leading-none"
+                  className="text-[24px] sm:text-[28px] lg:text-[32px] font-bold text-[#2C5FE3] m-0 leading-none"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
                   {stat.number}

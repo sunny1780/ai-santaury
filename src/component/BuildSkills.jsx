@@ -1,28 +1,28 @@
 const features = [
   {
-    icon: '11.svg',
-    title: 'Transparent Course Pricing',
-    description: 'No hidden fees — get clear, information about tuition',
+    icon: 'icons/1.svg',
+    title: 'Community Support',
+    description: 'Connect with peers, mentors, and learners across Pakistan for motivation and help.',
   },
   {
-    icon: '12.svg',
-    title: 'Flexible Payment Options',
-    description: 'Choose from multiple payment plans, scholarships',
+    icon: 'icons/2.svg',
+    title: 'Hands-On Projects',
+    description: 'Build real-world work through practical assignments and live sessions.',
   },
   {
-    icon: '13.svg',
-    title: 'Skill Assessment Tools',
-    description: 'Identify your strengths and learning needs with our guided',
+    icon: 'icons/3.svg',
+    title: 'Personalized Guidance',
+    description: 'Tailored advice to match your level, goals, and pace.',
   },
   {
-    icon: '14.svg',
-    title: 'On-Demand Enrollment',
-    description: 'Apply anytime with immediate access to course materials',
+    icon: 'icons/4.svg',
+    title: 'Expert Mentors',
+    description: 'Learn from experienced instructors passionate about your success.',
   },
   {
-    icon: '15.svg',
-    title: 'Personalized Learning',
-    description: 'Customizable curriculums tailored to fit your goals and pace.',
+    icon: 'icons/5.svg',
+    title: 'Career Boost',
+    description: 'Gain skills, a portfolio, and a certificate to open new opportunities.',
   },
 ];
 
@@ -62,7 +62,7 @@ export default function BuildSkills() {
           className="text-[32px] sm:text-[40px] font-semibold text-[#162D66] text-center sm:text-left"
           style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '100%', margin: 0 }}
         >
-          Build Skills<br />That Matter
+          Grow Confidently in Your Sanctuary
         </h2>
         
         {/* Cards Grid */}
@@ -90,7 +90,7 @@ export default function BuildSkills() {
                 fontFamily: 'Manrope, sans-serif',
               }}
             >
-              Build Skills<br />That Matter
+              Grow Confidently in Your Sanctuary
             </h2>
           </div>
           {/* Feature Card */}

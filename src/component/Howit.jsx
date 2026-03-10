@@ -4,23 +4,23 @@ import Description from './Descriptions';
 const steps = [
   {
     number: '01',
-    title: 'Inspire',
-    description: 'We inspire Ukrainians in Norway to embrace their heritage while building a new life, fostering confidence and cultural pride.',
+    title: 'Enroll',
+    description: 'Sign up and select your focus area in minutes.',
   },
   {
     number: '02',
-    title: 'Support',
-    description: 'From language learning to legal guidance, we provide comprehensive support for every step of the integration journey.',
+    title: 'Engage & Build',
+    description: 'Participate in live classes and apply concepts through projects.',
   },
   {
     number: '03',
-    title: 'Connect',
-    description: 'We create meaningful connections between Ukrainian families, Norwegian communities, and professional networks.',
+    title: 'Create Your Portfolio',
+    description: 'Develop real work samples to showcase your abilities.',
   },
   {
     number: '04',
-    title: 'Shape the Future',
-    description: 'Through education and mentorship, we prepare Ukrainian families to thrive and contribute to Norwegian society.',
+    title: 'Earn Your Certificate',
+    description: 'Complete milestones and receive official recognition.',
   },
 ];
 
@@ -30,7 +30,7 @@ export default function Howit() {
       <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
         <Heading2>How It Works</Heading2>
         <Description className="text-center">
-          Learning With Ai Sanctuary is Simple & Supportive
+          Your Learning Path
         </Description>
       </div>
 

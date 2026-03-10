@@ -6,7 +6,7 @@ const navLinks = [
   { label: "About Us", href: "/about" },
   { label: "Courses", href: "/courses" },
   { label: "Events", href: "/events" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 export default function Navbar() {

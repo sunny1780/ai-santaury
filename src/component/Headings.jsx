@@ -1,7 +1,7 @@
 export function Heading1({ children, className = "" }) {
   return (
     <h1
-      className={`w-full max-w-[529px] text-[32px] sm:text-[40px] md:text-[56px] lg:text-[72px] leading-[100%] font-bold ${className}`}
+      className={`w-full max-w-[529px] text-[32px] sm:text-[40px] md:text-[56px] lg:text-[72px] leading-[1.2] font-bold pb-2 ${className}`}
       style={{
         fontFamily: "Manrope, sans-serif",
         fontWeight: 700,
