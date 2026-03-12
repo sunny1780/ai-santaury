@@ -43,8 +43,13 @@ export default function Howit() {
             style={{ boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)' }}
           >
             <p
-              className="text-[32px] sm:text-[40px] lg:text-[48px] font-bold text-right text-[#2C5FE3] m-0 leading-none"
-              style={{ fontFamily: 'Manrope, sans-serif' }}
+              className="text-right text-[#2C5FE3] m-0 max-w-[402px] text-[40px] sm:text-[56px] lg:text-[72px]"
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 700,
+                lineHeight: '100%',
+                letterSpacing: '0.005em',
+              }}
             >
               {step.number}
             </p>

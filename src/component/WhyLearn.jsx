@@ -11,7 +11,7 @@ export default function WhyLearn() {
     <section className="px-4 sm:px-8 lg:px-[80px] py-12 lg:py-16 bg-[#F5F8FF]">
       <div className="max-w-[1080px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
         {/* Left: Image */}
-        <div className="w-full lg:flex-1 flex justify-center lg:justify-end order-first lg:order-none">
+        <div className="w-full lg:flex-[0_0_38%] flex justify-center lg:justify-end order-first lg:order-none">
           <img
             src={`${process.env.PUBLIC_URL}/images/comp.png`}
             alt="Learning with laptop"
@@ -20,7 +20,7 @@ export default function WhyLearn() {
         </div>
 
         {/* Right: Text Content */}
-        <div className="w-full lg:flex-1 flex flex-col gap-4 lg:gap-6 items-center lg:items-start text-center lg:text-left">
+        <div className="w-full lg:flex-[1_1_62%] flex flex-col gap-4 lg:gap-6 items-center lg:items-start text-center lg:text-left">
           <h2
             className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] leading-[100%] font-semibold text-[#162D66]"
             style={{

@@ -93,12 +93,8 @@ export default function UIUXDetails() {
           <ul className="list-none pl-0 m-0 flex flex-col gap-2">
             {courseForItems.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
-                <span className="text-[#326AFD] mt-1 flex-shrink-0">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                  </svg>
-                </span>
-                <span className="text-[18px] leading-[28px] font-normal" style={bodyStyle}>
+                <span className="mt-3 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#162D66] block" />
+                <span className="text-[18px] leading-[28px] font-normal flex-1" style={bodyStyle}>
                   {item}
                 </span>
               </li>
@@ -117,12 +113,8 @@ export default function UIUXDetails() {
           <ul className="list-none pl-0 m-0 flex flex-col gap-2">
             {getStartedItems.map((item, index) => (
               <li key={index} className="flex items-start gap-3">
-                <span className="text-[#326AFD] mt-1 flex-shrink-0">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                  </svg>
-                </span>
-                <span className="text-[18px] leading-[28px] font-normal" style={bodyStyle}>
+                <span className="mt-3 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#162D66] block" />
+                <span className="text-[18px] leading-[28px] font-normal flex-1" style={bodyStyle}>
                   {item}
                 </span>
               </li>

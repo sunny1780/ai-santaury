@@ -18,14 +18,16 @@ export default function Footer() {
           Do you have<br />any questions?
         </h2>
 
-        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between gap-4 lg:gap-6 mb-6 lg:mb-8">
           <p className="text-white text-sm lg:text-base font-normal leading-6 max-w-[500px] text-center lg:text-left">
             Feel free to send us your questions or get in touch; we&apos;re here to help!
           </p>
-          <span className="hidden lg:block text-white text-2xl">/</span>
-          <p className="text-white/80 text-xs lg:text-sm font-normal leading-5 max-w-[380px] text-center lg:text-left">
-            Clean code and clear concepts make all the difference in learning - start strong with Ai Sanctuary!
-          </p>
+          <div className="flex items-center gap-2 max-w-[368px] justify-center lg:justify-end text-left" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, fontSize: '16px', lineHeight: '24px', letterSpacing: '0.005em' }}>
+            <span className="text-white text-2xl font-bold">/</span>
+            <p className="text-white/80 m-0" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, fontSize: '16px', lineHeight: '24px', letterSpacing: '0.005em' }}>
+              Clean code and clear concepts make all the difference in learning – start strong with Ai Sanctuary!
+            </p>
+          </div>
         </div>
 
         <div className="flex justify-center lg:justify-start">

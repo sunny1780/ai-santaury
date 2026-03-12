@@ -10,7 +10,7 @@ const bulletPoints = [
 
 export default function AboutHero() {
   return (
-    <section className="relative overflow-hidden px-4 sm:px-6 md:px-8 lg:px-[80px] py-8 sm:py-10 md:py-12 lg:py-16">
+    <section className="relative overflow-hidden px-4 sm:px-6 md:px-8 lg:px-[80px] pt-8 sm:pt-10 md:pt-12 lg:pt-32 pb-8 sm:pb-10 md:pb-12 lg:pb-16">
       {/* Gradient Background */}
       <div
         className="absolute inset-0"

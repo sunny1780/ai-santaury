@@ -4,16 +4,28 @@ import Description from './Descriptions';
 
 const faqs = [
   {
-    question: 'What does Mimicked do?',
-    answer: '',
+    question: 'How do I get started?',
+    answer: 'Sign up with a quick form, choose a course, and begin learning right away.',
   },
   {
-    question: 'How do I set up the master and slave tabs?',
-    answer: 'Simply toggle the "Master Tab" switch for the main tab and "Slave Tab" for the others. The master tab controls all actions, and the slave tabs will mirror those actions automatically.',
+    question: 'Do I need prior experience?',
+    answer: 'No, our programs are beginner-friendly with step-by-step guidance.',
   },
   {
-    question: 'Can I choose how many slave tabs to create?',
-    answer: 'Yes! You can specify the exact number of slave tabs by entering the desired number and clicking the "Mimic" button.',
+    question: 'What courses are available?',
+    answer: 'UI/UX Design, AI Tools, MERN Stack, SEO, Graphic Design, Professional English, and more.',
+  },
+  {
+    question: 'Will I get a certificate?',
+    answer: 'Yes, complete the course and receive a digital certificate to showcase your skills.',
+  },
+  {
+    question: 'How can I get support?',
+    answer: 'Join live sessions, connect with mentors, and reach out via email or community channels.',
+  },
+  {
+    question: 'Is it suitable for students in Pakistan?',
+    answer: 'Absolutely — designed especially for youth and communities here, with flexible timing.',
   },
 ];
 
@@ -24,7 +36,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
       className="w-full flex justify-between items-center gap-4 py-4 sm:py-6 bg-transparent border-none cursor-pointer text-left"
     >
       <span
-        className="text-[14px] sm:text-[16px] font-semibold text-[#162D66]"
+        className="text-[14px] sm:text-[16px] font-semibold text-black"
         style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em' }}
       >
         {question}
@@ -48,7 +60,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => (
     {isOpen && answer && (
       <div className="pb-4 sm:pb-6">
         <p
-          className="text-[13px] sm:text-[14px] font-normal text-[#6B7280] m-0"
+          className="text-[13px] sm:text-[14px] font-normal text-black m-0"
           style={{ fontFamily: 'Inter, sans-serif', lineHeight: '22px' }}
         >
           {answer}
@@ -71,7 +83,7 @@ export default function HomeFaqs() {
       <div className="flex flex-col items-center gap-4 mb-8 lg:mb-12">
         <Heading2>Frequently Asked Questions</Heading2>
         <Description className="text-center">
-          Dedicated volunteers working tirelessly to make Mrija Norway a welcoming home for our community
+          Quick answers to common questions about learning with us.
         </Description>
       </div>
 

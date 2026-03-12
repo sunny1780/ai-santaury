@@ -39,39 +39,35 @@ const courses = [
     students: '85+ students',
     image: 'python.png',
   },
-  {
-    title: 'Lorem Ipsum',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
-    level: 'All levels',
-    duration: '4 Weeks',
-    students: '85+ students',
-    image: 'a2.png',
-  },
-  {
-    title: 'Lorem Ipsum',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
-    level: 'All levels',
-    duration: '4 Weeks',
-    students: '85+ students',
-    image: 'a3.png',
-  },
 ];
 
 const CourseCard = ({ title, description, level, duration, students, image, href }) => (
-  <div className="bg-white rounded-xl overflow-hidden shadow-sm flex flex-col">
-    <div className="h-40 bg-[#D3DBE0] overflow-hidden">
+  <div className="bg-white rounded-xl overflow-hidden border border-[#DBE2E7] flex flex-col">
+    <div className="h-40 bg-[#D3DBE0] overflow-hidden rounded-t-xl">
       <img
         src={`${process.env.PUBLIC_URL}/images/${image}`}
         alt={title}
         className="w-full h-full object-cover"
       />
     </div>
-    <div className="p-6 flex flex-col gap-3 flex-1">
-      <div className="flex justify-between items-center text-xs text-[#6B7280]">
-        <span style={{ fontFamily: 'Manrope, sans-serif' }}>{level}</span>
-        <span style={{ fontFamily: 'Manrope, sans-serif' }}>{duration}</span>
-        <span className="flex items-center gap-1" style={{ fontFamily: 'Manrope, sans-serif' }}>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+    <div className="p-5 sm:p-6 flex flex-col gap-3 flex-1">
+      <div className="flex justify-between items-center gap-3 flex-wrap">
+        <div className="flex gap-2 flex-wrap">
+          <span
+            className="px-3 py-1 rounded-md text-xs font-medium border border-[#B7D2FF] text-[#162D66] bg-white"
+            style={{ fontFamily: 'Manrope, sans-serif' }}
+          >
+            {level}
+          </span>
+          <span
+            className="px-3 py-1 rounded-md text-xs font-medium border border-[#B7D2FF] text-[#162D66] bg-white"
+            style={{ fontFamily: 'Manrope, sans-serif' }}
+          >
+            {duration}
+          </span>
+        </div>
+        <span className="flex items-center gap-1.5 text-xs text-[#1f2937]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#9CA3AF">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
           </svg>
           {students}
@@ -84,7 +80,7 @@ const CourseCard = ({ title, description, level, duration, students, image, href
         {title}
       </h3>
       <p
-        className="text-sm font-normal text-[#6B7280] m-0 flex-1"
+        className="text-sm font-normal text-[#374151] m-0 flex-1"
         style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em', lineHeight: '1.5' }}
       >
         {description}
@@ -92,10 +88,10 @@ const CourseCard = ({ title, description, level, duration, students, image, href
       {href ? (
         <Link
           to={href}
-          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full text-white text-base font-medium no-underline"
+          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full text-white text-base font-medium no-underline transition-opacity hover:opacity-90"
           style={{
             fontFamily: 'Manrope, sans-serif',
-            background: '#326AFD',
+            background: 'linear-gradient(90deg, #2563EB 0%, #3B82F6 100%)',
           }}
         >
           Enroll Now →
@@ -106,7 +102,7 @@ const CourseCard = ({ title, description, level, duration, students, image, href
           className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full text-white text-base font-medium"
           style={{
             fontFamily: 'Manrope, sans-serif',
-            background: '#326AFD',
+            background: 'linear-gradient(90deg, #2563EB 0%, #3B82F6 100%)',
           }}
         >
           Enroll Now →

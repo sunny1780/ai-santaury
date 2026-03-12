@@ -79,7 +79,7 @@ const cardTitle = {
   fontSize: 14,
   fontWeight: 700,
   lineHeight: '24px',
-  color: '#1B1D21',
+  color: '#162D66',
   letterSpacing: '0.005em',
   margin: 0,
   fontFamily: 'Manrope, sans-serif',
@@ -102,7 +102,7 @@ const MobileCard = ({ icon, title, description }) => (
     <div className="w-12 h-12 rounded-xl bg-[#F5F8FF] flex items-center justify-center flex-shrink-0">
       {icons[icon]}
     </div>
-    <h3 className="text-sm font-bold text-[#1B1D21] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
+    <h3 className="text-sm font-bold text-[#162D66] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
       {title}
     </h3>
     <p className="text-xs font-medium text-[#6B7280] m-0 leading-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
@@ -124,7 +124,7 @@ export default function OurCourses() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <MobileCard icon={1} title="SEO & Digital Growth" description="Optimize websites, analyze performance, and drive organic traffic." />
           <MobileCard icon={2} title="English Communication" description="Develop fluency, confidence, and effective speaking for career advancement." />
           <MobileCard icon={3} title="Python Programming" description="Craft visuals, branding, social content, and marketing materials." />
@@ -135,7 +135,7 @@ export default function OurCourses() {
             <div className="w-12 h-12 rounded-xl bg-[#F5F8FF] flex items-center justify-center flex-shrink-0">
               <FigmaIcon />
             </div>
-            <h3 className="text-sm font-bold text-[#1B1D21] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
+            <h3 className="text-sm font-bold text-[#162D66] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
               UI/UX Design
             </h3>
             <p className="text-xs font-medium text-[#6B7280] m-0 leading-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
@@ -148,7 +148,7 @@ export default function OurCourses() {
             <div className="w-12 h-12 rounded-xl bg-[#F5F8FF] flex items-center justify-center flex-shrink-0">
               <img src={`${process.env.PUBLIC_URL}/images/6.svg`} alt="AI Automation" className="w-6 h-6" />
             </div>
-            <h3 className="text-sm font-bold text-[#1B1D21] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
+            <h3 className="text-sm font-bold text-[#162D66] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
               AI Automation
             </h3>
             <p className="text-xs font-medium text-[#6B7280] m-0 leading-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
@@ -167,11 +167,11 @@ export default function OurCourses() {
         </div>
 
         {/* Main Layout: Left Grid + Right E-commerce Card */}
-        <div style={{ display: 'flex', gap: 24, justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
           {/* Left Side Grid */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {/* First Row: 3 small cards */}
-            <div style={{ display: 'flex', gap: 20, marginBottom: 24, justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 24, justifyContent: 'center' }}>
               {courses.filter(c => [1, 2, 3].includes(c.id)).map((course) => (
                 <div key={course.id} style={{ ...baseCard, width: 256 }}>
                   <div style={iconBox}>
@@ -184,7 +184,7 @@ export default function OurCourses() {
             </div>
 
             {/* Second Row: Figma wide card + Custom Development card */}
-            <div style={{ display: 'flex', gap: 20, justifyContent: 'center', width: '100%', maxWidth: 808 }}>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', width: '100%', maxWidth: 808 }}>
               {/* Figma Wide Card */}
               <div
                 style={{

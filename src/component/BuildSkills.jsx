@@ -27,7 +27,7 @@ const features = [
 ];
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 lg:p-6 flex gap-2.5 sm:gap-3 md:gap-4 items-start shadow-sm min-w-0">
+  <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 lg:p-6 flex gap-2.5 sm:gap-3 md:gap-4 items-start shadow-sm border border-[#DBE2E7] min-w-0">
     <div className="flex-shrink-0">
       <img
         src={`${process.env.PUBLIC_URL}/images/${icon}`}
