@@ -8,15 +8,15 @@ export default function OurInstructors() {
           className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] font-semibold text-[#162D66] m-0 leading-tight"
           style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em' }}
         >
-          What Our Learners
-          <br />
-          Say
+          Where Hard Work Got
+          Its Recognition
+          
         </h2>
         <p
           className="max-w-[400px] text-[16px] sm:text-[18px] leading-[26px] sm:leading-[28px] font-normal text-[#162D66] m-0 text-left lg:text-right pt-0 lg:pt-[15px]"
           style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em' }}
         >
-          Real stories from students building skills, confidence, and opportunities with Ai Sanctuary.
+          Real memories from prize distributions, guest honors, and a manager's speech that inspired every learner at Ai Sanctuary.
         </p>
       </div>
 
