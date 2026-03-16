@@ -83,12 +83,12 @@ const TeamCard = ({ name, role, description, image }) => (
       >
         {role}
       </p>
-      <p
+      {/* <p
         className="text-xs sm:text-sm font-normal text-[#6B7280] m-0"
         style={{ fontFamily: 'Inter, sans-serif', lineHeight: '20px' }}
       >
         {description}
-      </p>
+      </p> */}
     </div>
   </div>
 );

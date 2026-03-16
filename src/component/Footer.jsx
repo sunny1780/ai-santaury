@@ -75,7 +75,7 @@ export default function Footer() {
 
           {/* Location */}
           <div>
-            <p className="text-xs font-medium text-white/70 leading-4 mb-2">Location</p>
+            <p className="text-xs font-medium text-white/70 leading-4 mb-2">LOCATION</p>
             <p className="text-sm lg:text-base font-medium text-white leading-6">
               Office#230 M Dubai Tower Khanna pull<br />
               Islamabad Pakistan

@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function PythonHero() {
+  const navigate = useNavigate();
   return (
     <section className="px-4 sm:px-8 lg:px-[80px] py-8 sm:py-12 lg:py-16 bg-white">
       <div className="max-w-[1080px] mx-auto">
@@ -25,6 +28,10 @@ export default function PythonHero() {
               type="button"
               className="w-fit px-6 py-3 rounded-full text-white font-medium text-base"
               style={{ fontFamily: 'Manrope, sans-serif', background: '#326AFD' }}
+              onClick={() => {
+                window.scrollTo(0, 0);
+                navigate('/contact');
+              }}
             >
               Get Registered Today →
             </button>
