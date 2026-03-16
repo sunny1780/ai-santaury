@@ -13,7 +13,7 @@ export default function OurInstructors() {
           Say
         </h2>
         <p
-          className="max-w-[400px] text-[16px] sm:text-[18px] leading-[26px] sm:leading-[28px] font-normal text-[#162D66] m-0 text-left lg:text-right"
+          className="max-w-[400px] text-[16px] sm:text-[18px] leading-[26px] sm:leading-[28px] font-normal text-[#162D66] m-0 text-left lg:text-right pt-0 lg:pt-[15px]"
           style={{ fontFamily: 'Manrope, sans-serif', letterSpacing: '0.005em' }}
         >
           Real stories from students building skills, confidence, and opportunities with Ai Sanctuary.

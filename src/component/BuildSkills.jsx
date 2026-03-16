@@ -94,13 +94,13 @@ export default function BuildSkills() {
         </div>
 
         {/* Column 2 */}
-        <div className="flex flex-col gap-4 xl:gap-6 min-w-0">
+        <div className="flex flex-col gap-4 xl:gap-6 min-w-0 pt-[62px] xl:pt-[70px]">
           <FeatureCard {...features[0]} />
           <FeatureCard {...features[3]} />
         </div>
 
         {/* Column 3 */}
-        <div className="flex flex-col gap-4 xl:gap-6 min-w-0">
+        <div className="flex flex-col gap-4 xl:gap-6 min-w-0 pt-[62px] xl:pt-[70px]">
           <FeatureCard {...features[1]} />
           <FeatureCard {...features[4]} />
         </div>

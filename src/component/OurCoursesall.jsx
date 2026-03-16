@@ -8,8 +8,8 @@ const courses = [
     href: '/uiux',
     description: 'Learn to create user-centered interfaces using Figma, wire framing, prototyping, and design principles.',
     level: 'All levels',
-    duration: '4 Weeks',
-    students: '85+ students',
+    duration: '16 Weeks',
+    students: '6+ students',
     image: 'uiux.png',
   },
   {
@@ -17,8 +17,8 @@ const courses = [
     href: '/website',
     description: 'Master MongoDB, Express, React, and Node.js to build full-stack web applications.',
     level: 'All levels',
-    duration: '4 Weeks',
-    students: '85+ students',
+    duration: '16 Weeks',
+    students: '15+ students',
     image: 'Website.png',
   },
   {
@@ -26,8 +26,8 @@ const courses = [
     href: '/seo',
     description: 'Learn search engine optimization and digital marketing strategies to grow your online presence.',
     level: 'All levels',
-    duration: '4 Weeks',
-    students: '85+ students',
+    duration: '16 Weeks',
+    students: '7+ students',
     image: 'SEO.png',
   },
   {
@@ -35,8 +35,8 @@ const courses = [
     href: '/python',
     description: 'From basics to advanced: build automation, data science, and web development skills.',
     level: 'All levels',
-    duration: '4 Weeks',
-    students: '85+ students',
+    duration: '16 Weeks',
+    students: '7+ students',
     image: 'python.png',
   },
 ];

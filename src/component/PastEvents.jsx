@@ -10,12 +10,6 @@ const events = [
     image: 'past.png',
     href: '/three-days',
   },
-  {
-    title: 'Cultural Evening',
-    date: 'August 24, 2025',
-    description: 'Join us for traditional Ukrainian music, food, and fellowship',
-    image: 'peoples.png',
-  },
 ];
 
 const EventCardInner = ({ title, date, description, image }) => (
@@ -79,7 +73,7 @@ export default function PastEvents() {
           </Description>
         </div>
 
-        <div className="flex flex-col md:flex-row md:flex-wrap md:justify-center gap-6">
+        <div className="flex flex-col items-center justify-center gap-6">
         {events.map((event, index) => (
           <EventCard key={index} {...event} />
         ))}

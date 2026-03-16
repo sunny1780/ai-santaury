@@ -167,11 +167,11 @@ export default function OurCourses() {
         </div>
 
         {/* Main Layout: Left Grid + Right E-commerce Card */}
-        <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
           {/* Left Side Grid */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             {/* First Row: 3 small cards */}
-            <div style={{ display: 'flex', gap: 10, marginBottom: 24, justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
               {courses.filter(c => [1, 2, 3].includes(c.id)).map((course) => (
                 <div key={course.id} style={{ ...baseCard, width: 256 }}>
                   <div style={iconBox}>
@@ -184,7 +184,7 @@ export default function OurCourses() {
             </div>
 
             {/* Second Row: Figma wide card + Custom Development card */}
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', width: '100%', maxWidth: 808 }}>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', width: '100%', maxWidth: 808 }}>
               {/* Figma Wide Card */}
               <div
                 style={{
@@ -198,7 +198,7 @@ export default function OurCourses() {
                   minHeight: 252,
                 }}
               >
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, minWidth: 0 }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 12, padding: 24, paddingTop: 30, minWidth: 0 }}>
                   <div style={{ ...iconBox, background: '#F5F8FF' }}>
                     <FigmaIcon />
                   </div>
@@ -252,7 +252,7 @@ export default function OurCourses() {
           <div
             style={{
               width: 256.7895,
-              height: 506,
+              height: 494,
               background: '#fff',
               borderRadius: 8.42,
               border: '0.84px solid #e5e7eb',
