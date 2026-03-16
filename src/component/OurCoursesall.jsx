@@ -134,7 +134,7 @@ export default function OurCoursesall() {
         <div className="flex flex-col items-center gap-4 mb-12">
           <Heading2>Our Courses</Heading2>
           <Description className="text-center max-w-[500px]">
-            Join our vibrant community events and connect with fellow Ukrainians in Norway.
+          From beginners to pros our courses give you the skills the world is looking for.
           </Description>
         </div>
 

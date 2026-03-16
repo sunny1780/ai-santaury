@@ -4,7 +4,7 @@ import Footer from '../component/Footer';
 import Heading2 from '../component/Headings';
 import Description from '../component/Descriptions';
 
-const API_BASE = process.env.REACT_APP_API_URL || '';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export default function Contactus() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
