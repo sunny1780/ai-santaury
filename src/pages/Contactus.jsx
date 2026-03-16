@@ -4,12 +4,35 @@ import Footer from '../component/Footer';
 import Heading2 from '../component/Headings';
 import Description from '../component/Descriptions';
 
+const API_BASE = process.env.REACT_APP_API_URL || '';
+
 export default function Contactus() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
+    setStatus(null);
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ type: 'success', text: 'Message sent! We\'ll get back to you soon.' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus({ type: 'error', text: data.error || 'Something went wrong.' });
+      }
+    } catch {
+      setStatus({ type: 'error', text: 'Failed to send. Check your connection or try again later.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -84,12 +107,21 @@ export default function Contactus() {
                   placeholder=""
                 />
               </div>
+              {status && (
+              <p
+                className={`text-sm font-medium ${status.type === 'success' ? 'text-green-600' : 'text-red-600'}`}
+                style={{ fontFamily: 'Manrope, sans-serif' }}
+              >
+                {status.text}
+              </p>
+            )}
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-3 rounded-full text-white font-medium"
+                disabled={loading}
+                className="w-full sm:w-auto px-8 py-3 rounded-full text-white font-medium disabled:opacity-70"
                 style={{ fontFamily: 'Manrope, sans-serif', background: '#326AFD' }}
               >
-                Send
+                {loading ? 'Sending...' : 'Send'}
               </button>
             </form>
 

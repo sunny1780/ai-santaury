@@ -20,20 +20,25 @@ export default function OurInstructors() {
         </p>
       </div>
 
-      {/* Video Placeholder */}
-      <div
-        className="w-full rounded-xl overflow-hidden min-h-[280px] sm:min-h-[360px] lg:min-h-[420px] bg-[#F3F4F6]"
-        style={{
-          backgroundImage: `
-            linear-gradient(45deg, #E5E7EB 25%, transparent 25%),
-            linear-gradient(-45deg, #E5E7EB 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, #E5E7EB 75%),
-            linear-gradient(-45deg, transparent 75%, #E5E7EB 75%)
-          `,
-          backgroundSize: '24px 24px',
-          backgroundPosition: '0 0, 0 12px, 12px -12px, -12px 0px',
-        }}
-      />
+      {/* Learners Video */}
+      <div className="w-full rounded-xl overflow-hidden min-h-[280px] sm:min-h-[360px] lg:min-h-[420px] bg-black flex items-center justify-center">
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          controls
+          playsInline
+          preload="metadata"
+          onEnded={(e) => {
+            e.currentTarget.currentTime = 0;
+            e.currentTarget.play();
+          }}
+        >
+          <source src="https://customer-leo8lubv91ct4vwd.cloudflarestream.com/362626039cd0538734e5a41b4e3d2923/manifest/video.m3u8" type="application/x-mpegURL" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
       </div>
     </section>
   );
