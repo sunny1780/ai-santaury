@@ -82,7 +82,7 @@ export default function OurCore() {
         </div>
 
         {/* Right Column */}
-        <div className="flex-1 flex flex-col gap-8 pt-6 lg:pt-8">
+        <div className="flex-1 flex flex-col gap-8 pt-6 lg:pt-10">
           {values.map((item, index) => (
             <ValueItem key={index} {...item} />
           ))}

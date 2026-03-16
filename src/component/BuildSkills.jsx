@@ -27,7 +27,7 @@ const features = [
 ];
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 lg:p-6 flex gap-2.5 sm:gap-3 md:gap-4 items-start shadow-sm border border-[#DBE2E7] min-w-0">
+  <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 lg:p-6 flex gap-2.5 sm:gap-3 md:gap-4 items-start shadow-sm border border-[#DBE2E7] min-w-0 h-[160px]">
     <div className="flex-shrink-0">
       <img
         src={`${process.env.PUBLIC_URL}/images/${icon}`}
@@ -88,19 +88,19 @@ export default function BuildSkills() {
             </h2>
           </div>
           {/* Feature Card */}
-          <div className="pt-4 xl:pt-6">
+          <div className="pt-0 xl:pt-0">
             <FeatureCard {...features[2]} />
           </div>
         </div>
 
         {/* Column 2 */}
-        <div className="flex flex-col gap-4 xl:gap-6 min-w-0 pt-[62px] xl:pt-[70px]">
+        <div className="flex flex-col gap-6 xl:gap-8 min-w-0 pt-[52px] xl:pt-[60px]">
           <FeatureCard {...features[0]} />
           <FeatureCard {...features[3]} />
         </div>
 
         {/* Column 3 */}
-        <div className="flex flex-col gap-4 xl:gap-6 min-w-0 pt-[62px] xl:pt-[70px]">
+        <div className="flex flex-col gap-6 xl:gap-8 min-w-0 pt-[52px] xl:pt-[60px]">
           <FeatureCard {...features[1]} />
           <FeatureCard {...features[4]} />
         </div>

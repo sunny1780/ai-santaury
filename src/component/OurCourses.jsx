@@ -74,7 +74,7 @@ const iconBox = {
 };
 
 const cardTitle = {
-  width: 149,
+  width: 200,
   height: 24,
   fontSize: 14,
   fontWeight: 700,

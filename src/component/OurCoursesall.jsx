@@ -88,7 +88,7 @@ const CourseCard = ({ title, description, level, duration, students, image, href
       {href ? (
         <Link
           to={href}
-          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full text-white text-base font-medium no-underline transition-opacity hover:opacity-90"
+          className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-full text-white text-base font-medium no-underline transition-opacity hover:opacity-90"
           style={{
             fontFamily: 'Manrope, sans-serif',
             background: 'linear-gradient(90deg, #2563EB 0%, #3B82F6 100%)',

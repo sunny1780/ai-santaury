@@ -31,7 +31,7 @@ export default function Hero() {
 
       <div className="w-full lg:w-auto lg:flex-1 flex justify-center lg:justify-end order-first lg:order-last">
         <img
-          src={`${process.env.PUBLIC_URL}/images/Hhero.svg`}
+          src={`${process.env.PUBLIC_URL}/images/Heroo.svg`}
           alt="Digital education"
           className="w-full max-w-[280px] sm:max-w-[350px] md:max-w-[450px] lg:max-w-none object-contain"
         />
