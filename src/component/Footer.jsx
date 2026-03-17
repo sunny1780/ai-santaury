@@ -18,24 +18,44 @@ export default function Footer() {
           Do you have<br />any questions?
         </h2>
 
-        <div className="flex flex-col lg:flex-row items-center lg:items-center lg:justify-between gap-4 lg:gap-6 mb-6 lg:mb-8">
-          <p className="text-white text-sm lg:text-base font-normal leading-6 max-w-[500px] text-center lg:text-left">
+        {/* Mobile: Feel free → Button → Quote */}
+        <div className="lg:hidden flex flex-col items-center gap-4 mb-6">
+          <p className="text-white text-sm font-normal leading-6 max-w-[500px] text-center">
             Feel free to send us your questions or get in touch; we&apos;re here to help!
           </p>
-          <div className="flex items-center gap-2 max-w-[368px] justify-center lg:justify-end text-left" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, fontSize: '16px', lineHeight: '24px', letterSpacing: '0.005em' }}>
-            <span className="text-white text-2xl font-bold -mt-12 inline-block">/</span>
-            <p className="text-white/80 m-0" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, fontSize: '16px', lineHeight: '24px', letterSpacing: '0.005em' }}>
-              Clean code and clear concepts make all the difference in learning – start strong with Ai Sanctuary!
-            </p>
-          </div>
-        </div>
-
-        <div className="flex justify-center lg:justify-start">
           <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
             <button className="bg-white rounded-full px-6 py-3 text-[#5A666E] text-sm font-medium cursor-pointer hover:bg-white/90 transition-colors">
               Send a Message
             </button>
           </Link>
+          <div className="flex items-center gap-2 max-w-[368px] justify-center text-left" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, letterSpacing: '0.005em' }}>
+            <span className="text-white text-2xl font-bold -mt-12 inline-block">/</span>
+            <p className="text-white/80 m-0 text-sm leading-5" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, letterSpacing: '0.005em' }}>
+              Clean code and clear concepts make all the difference in learning – start strong with Ai Sanctuary!
+            </p>
+          </div>
+        </div>
+
+        {/* Desktop: original layout – row (Feel free | Quote) then button below */}
+        <div className="hidden lg:block">
+          <div className="flex flex-row items-center justify-between gap-6 mb-6 lg:mb-8">
+            <p className="text-white text-base font-normal leading-6 max-w-[500px] text-left">
+              Feel free to send us your questions or get in touch; we&apos;re here to help!
+            </p>
+            <div className="flex items-center gap-2 max-w-[368px] justify-end text-left" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, fontSize: '16px', lineHeight: '24px', letterSpacing: '0.005em' }}>
+              <span className="text-white text-2xl font-bold -mt-12 inline-block">/</span>
+              <p className="text-white/80 m-0 text-base leading-6" style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, letterSpacing: '0.005em' }}>
+                Clean code and clear concepts make all the difference in learning – start strong with Ai Sanctuary!
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-start">
+            <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
+              <button className="bg-white rounded-full px-6 py-3 text-[#5A666E] text-sm font-medium cursor-pointer hover:bg-white/90 transition-colors">
+                Send a Message
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
 
