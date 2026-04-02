@@ -31,16 +31,16 @@ export default function EventsHero() {
           </Description>
         </div>
 
-        {/* Mobile Layout - 1, 2, 3 */}
+        {/* Mobile Layout - show only 3rd image */}
         <div className="lg:hidden flex flex-col gap-4">
-          <div className="rounded-xl overflow-hidden bg-[#D3DBE0] aspect-square max-w-[280px] mx-auto w-full">
+          <div className="hidden rounded-xl overflow-hidden bg-[#D3DBE0] aspect-square max-w-[280px] mx-auto w-full">
             <img
               src={`${process.env.PUBLIC_URL}/images/one.png`}
               alt="Event 1"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="rounded-xl overflow-hidden bg-[#D3DBE0] aspect-[16/9] w-full">
+          <div className="hidden rounded-xl overflow-hidden bg-[#D3DBE0] aspect-[16/9] w-full">
             <img
               src={`${process.env.PUBLIC_URL}/images/two.png`}
               alt="Event 2"

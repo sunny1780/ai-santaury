@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const events = [
   {
     title: '3-Day Skill Challenge',
-    date: 'August 24, 2025',
+    date: 'January 26, 2026',
     description: 'Intense 3-day competition with timed tasks',
     image: 'past.png',
     href: '/three-days',

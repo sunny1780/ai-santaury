@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './component/Navbar';
 import Hero from './component/Hero';
 import OurCourses from './component/OurCourses';
@@ -18,6 +18,19 @@ import UIUX from './pages/UIUX';
 import Python from './pages/Python';
 import Website from './pages/Website';
 import SEO from './pages/SEO';
+import AllOnlineCourses from './component/Dashboard/AllOnlineCourses';
+import Notifications from './component/Dashboard/Notifications';
+import MyLearnings from './component/Dashboard/MyLearnings';
+import MyCertificates from './component/Dashboard/MyCertificates';
+import Settings from './component/Dashboard/Settings';
+import InstDashboard from './component/InstDashboard/Dashboard';
+import InstSimplePage from './component/InstDashboard/InstSimplePage';
+import InstCourses from './component/InstDashboard/Courses';
+import PublishNew from './component/InstDashboard/PublishNew';
+import Dashboard from './component/Dashboard/Dashboard';
+import InstInstructors from './component/InstDashboard/Instructors';
+import InstNotifications from './component/InstDashboard/InstNotifications';
+import InstSettings from './component/InstDashboard/InstSettings';
 
 function HomePage() {
   return (
@@ -50,6 +63,22 @@ function App() {
         <Route path="/python" element={<Python />} />
         <Route path="/website" element={<Website />} />
         <Route path="/seo" element={<SEO />} />
+
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/explore" element={<AllOnlineCourses />} />
+        <Route path="/dashboard/notifications" element={<Notifications />} />
+        <Route path="/dashboard/learnings" element={<MyLearnings />} />
+        <Route path="/dashboard/certificates" element={<MyCertificates />} />
+        <Route path="/dashboard/settings" element={<Settings />} />
+
+        {/* Instructor dashboard */}
+        <Route path="/inst/dashboard" element={<InstDashboard />} />
+        <Route path="/inst/instructors" element={<InstInstructors />} />
+        <Route path="/inst/courses" element={<InstCourses />} />
+        <Route path="/inst/publish" element={<PublishNew />} />
+        <Route path="/inst/notifications" element={<InstNotifications />} />
+        <Route path="/inst/settings" element={<InstSettings />} />
       </Routes>
     </BrowserRouter>
   );
