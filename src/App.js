@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './component/Navbar';
 import Hero from './component/Hero';
 import OurCourses from './component/OurCourses';
@@ -24,13 +24,17 @@ import MyLearnings from './component/Dashboard/MyLearnings';
 import MyCertificates from './component/Dashboard/MyCertificates';
 import Settings from './component/Dashboard/Settings';
 import InstDashboard from './component/InstDashboard/Dashboard';
-import InstSimplePage from './component/InstDashboard/InstSimplePage';
 import InstCourses from './component/InstDashboard/Courses';
 import PublishNew from './component/InstDashboard/PublishNew';
 import Dashboard from './component/Dashboard/Dashboard';
 import InstInstructors from './component/InstDashboard/Instructors';
 import InstNotifications from './component/InstDashboard/InstNotifications';
 import InstSettings from './component/InstDashboard/InstSettings';
+import RoleSelection from './component/RoleSelection';
+import SignupDetails from './component/SignupDetails';
+import Login from './component/Login';
+import ForgotPassword from './component/ForgotPassword';
+import ResetPassword from './component/ResetPassword';
 
 function HomePage() {
   return (
@@ -63,6 +67,12 @@ function App() {
         <Route path="/python" element={<Python />} />
         <Route path="/website" element={<Website />} />
         <Route path="/seo" element={<SEO />} />
+        <Route path="/signup" element={<RoleSelection />} />
+        <Route path="/signup/details" element={<SignupDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/get-started" element={<RoleSelection />} />
 
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />

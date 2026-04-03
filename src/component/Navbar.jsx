@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const navLinks = [
@@ -11,6 +11,35 @@ const navLinks = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
+
+  useEffect(() => {
+    function syncAuthUser() {
+      try {
+        const storedUser = localStorage.getItem('authUser');
+        setAuthUser(storedUser ? JSON.parse(storedUser) : null);
+      } catch (error) {
+        setAuthUser(null);
+      }
+    }
+
+    syncAuthUser();
+    window.addEventListener('storage', syncAuthUser);
+
+    return () => {
+      window.removeEventListener('storage', syncAuthUser);
+    };
+  }, []);
+
+  const authLink = authUser
+    ? {
+        label: 'Profile',
+        href: authUser.role === 'instructor' ? '/inst/dashboard' : '/dashboard',
+      }
+    : {
+        label: 'Sign up',
+        href: '/signup',
+      };
 
   return (
     <nav className="relative w-full px-4 sm:px-8 lg:px-[80px] py-4 bg-white">
@@ -48,6 +77,16 @@ export default function Navbar() {
             </li>
           ))}
       </ul>
+
+      <div className="hidden md:flex items-center">
+        <Link
+          to={authLink.href}
+          className="inline-flex items-center justify-center rounded-full border border-[#D9E4F7] px-5 py-2 text-[14px] lg:text-[16px] font-medium text-[#162D66] hover:bg-[#F4F8FF] transition-colors no-underline"
+          style={{ letterSpacing: '0.005em' }}
+        >
+          {authLink.label}
+        </Link>
+      </div>
 
       {/* Mobile Menu Button */}
       <button
@@ -88,6 +127,16 @@ export default function Navbar() {
                 )}
               </li>
             ))}
+            <li>
+              <Link
+                to={authLink.href}
+                className="block py-3 text-[16px] leading-6 font-medium text-[#162D66] hover:text-[#0F7FDE] transition-colors no-underline"
+                style={{ letterSpacing: '0.005em' }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {authLink.label}
+              </Link>
+            </li>
           </ul>
         </div>
       )}
