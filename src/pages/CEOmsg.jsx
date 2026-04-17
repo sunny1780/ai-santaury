@@ -35,7 +35,7 @@ export default function CEOmsg() {
 
               <div>
                 <h2 className="text-3xl font-bold text-[#162D66]">Amir Abbasi</h2>
-                <p className="mt-1 text-xl text-[#4B5563]">Foundation Founder</p>
+                {/* <p className="mt-1 text-xl text-[#4B5563]">Foundation Founder</p> */}
 
                 <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[#4B5563]">
                 At AI Sanctuary, we believe knowledge is the strongest bridge to opportunity. Founded by Amir Abbasi, an IT professional with 22 years of experience, based out of Los Angeles, California, USA, our mission is to make digital education universally accessible and ignite real-world digital awareness in communities often left behind by economic, geographic, or social barriers.
