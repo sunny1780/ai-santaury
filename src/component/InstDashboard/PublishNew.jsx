@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebaar from './Sidebaar';
+import InstructorUserBadge from './InstructorUserBadge';
+import { createCourse } from '../../utils/authApi';
+import { addCurrentUserNotification, addNotification } from '../../utils/notificationStore';
 
 const steps = [
   {
@@ -107,6 +111,29 @@ function RichTextToolbar() {
 
 const LIST_MAX = 8;
 
+function createEmptyLecture(index = 0) {
+  return {
+    id: `lecture-${Date.now()}-${index}`,
+    name: `Lecture ${index + 1}`,
+    contents: {
+      videoSection: '',
+      videoFileName: '',
+      attachFileName: '',
+      descriptionText: '',
+      notesText: '',
+      notesFileName: '',
+    },
+  };
+}
+
+function createEmptySection(index = 0) {
+  return {
+    id: `section-${Date.now()}-${index}`,
+    title: `Section ${index + 1}`,
+    lectures: [createEmptyLecture(0), createEmptyLecture(1)],
+  };
+}
+
 function ListBlock({ title, items, setItems, placeholder }) {
   const add = () => {
     setItems((prev) => (prev.length < LIST_MAX ? [...prev, ''] : prev));
@@ -172,7 +199,11 @@ function ListBlock({ title, items, setItems, placeholder }) {
 }
 
 export default function PublishNew() {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const [submitError, setSubmitError] = useState('');
+  const [submitSuccess, setSubmitSuccess] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [topic, setTopic] = useState('');
@@ -185,21 +216,27 @@ export default function PublishNew() {
   const [durationUnit, setDurationUnit] = useState('Day');
 
   const [courseDescription, setCourseDescription] = useState('');
+  const [thumbnailFileName, setThumbnailFileName] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [trailerFileName, setTrailerFileName] = useState('');
   const [teachList, setTeachList] = useState(['', '', '', '']);
   const [whoForList, setWhoForList] = useState(['', '', '', '']);
   const [reqList, setReqList] = useState(['', '', '', '']);
+  const [welcomeMessage, setWelcomeMessage] = useState('');
+  const [congratulationsMessage, setCongratulationsMessage] = useState('');
 
-  /** Curriculum: which lecture row has "Contents" open (0, 1, or null) */
-  const [openLectureMenu, setOpenLectureMenu] = useState(1);
+  const [curriculumSections, setCurriculumSections] = useState([createEmptySection(0)]);
+  const [openLectureMenu, setOpenLectureMenu] = useState(null);
+  const [selectedLectureTarget, setSelectedLectureTarget] = useState(null);
 
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [lectureVideoSection, setLectureVideoSection] = useState('');
   const [lectureVideoFileName, setLectureVideoFileName] = useState('');
+  const [lectureVideoError, setLectureVideoError] = useState('');
 
   const closeVideoModal = () => {
     setVideoModalOpen(false);
-    setLectureVideoSection('');
-    setLectureVideoFileName('');
+    setLectureVideoError('');
   };
 
   const canSubmitLectureVideo = lectureVideoSection.trim().length > 0 && lectureVideoFileName.length > 0;
@@ -209,7 +246,6 @@ export default function PublishNew() {
 
   const closeAttachModal = () => {
     setAttachModalOpen(false);
-    setLectureAttachFileName('');
   };
 
   const canSubmitLectureAttachFile = lectureAttachFileName.length > 0;
@@ -219,7 +255,6 @@ export default function PublishNew() {
 
   const closeDescriptionModal = () => {
     setDescriptionModalOpen(false);
-    setLectureDescriptionText('');
   };
 
   const canSubmitLectureDescription = lectureDescriptionText.trim().length > 0;
@@ -230,11 +265,232 @@ export default function PublishNew() {
 
   const closeNotesModal = () => {
     setNotesModalOpen(false);
-    setLectureNotesText('');
-    setLectureNotesFileName('');
   };
 
   const canSubmitLectureNotes = lectureNotesText.trim().length > 0 && lectureNotesFileName.length > 0;
+
+  function getLectureMenuKey(sectionIndex, lectureIndex) {
+    return `${sectionIndex}-${lectureIndex}`;
+  }
+
+  function updateCurriculumSection(sectionIndex, updater) {
+    setCurriculumSections((prev) =>
+      prev.map((section, index) => (index === sectionIndex ? updater(section) : section))
+    );
+  }
+
+  function updateSectionTitle(sectionIndex, value) {
+    updateCurriculumSection(sectionIndex, (section) => ({
+      ...section,
+      title: value,
+    }));
+  }
+
+  function updateLectureName(sectionIndex, lectureIndex, value) {
+    updateCurriculumSection(sectionIndex, (section) => ({
+      ...section,
+      lectures: section.lectures.map((lecture, index) =>
+        index === lectureIndex ? { ...lecture, name: value } : lecture
+      ),
+    }));
+  }
+
+  function addSection() {
+    setCurriculumSections((prev) => [...prev, createEmptySection(prev.length)]);
+  }
+
+  function addLecture(sectionIndex) {
+    updateCurriculumSection(sectionIndex, (section) => ({
+      ...section,
+      lectures: [...section.lectures, createEmptyLecture(section.lectures.length)],
+    }));
+  }
+
+  function removeLecture(sectionIndex, lectureIndex) {
+    updateCurriculumSection(sectionIndex, (section) => {
+      if (section.lectures.length === 1) return section;
+
+      return {
+        ...section,
+        lectures: section.lectures.filter((_, index) => index !== lectureIndex),
+      };
+    });
+
+    setOpenLectureMenu(null);
+  }
+
+  function updateSelectedLectureContents(patch) {
+    if (!selectedLectureTarget) return;
+
+    updateCurriculumSection(selectedLectureTarget.sectionIndex, (section) => ({
+      ...section,
+      lectures: section.lectures.map((lecture, index) =>
+        index === selectedLectureTarget.lectureIndex
+          ? {
+              ...lecture,
+              contents: {
+                ...lecture.contents,
+                ...patch,
+              },
+            }
+          : lecture
+      ),
+    }));
+  }
+
+  function openContentModal(type, sectionIndex, lectureIndex) {
+    const lecture = curriculumSections[sectionIndex]?.lectures?.[lectureIndex];
+    const contents = lecture?.contents || {};
+
+    setSelectedLectureTarget({ sectionIndex, lectureIndex });
+    setOpenLectureMenu(null);
+
+    if (type === 'Video') {
+      setLectureVideoSection(contents.videoSection || '');
+      setLectureVideoFileName(contents.videoFileName || '');
+      setLectureVideoError('');
+      setVideoModalOpen(true);
+    }
+
+    if (type === 'Attach File') {
+      setLectureAttachFileName(contents.attachFileName || '');
+      setAttachModalOpen(true);
+    }
+
+    if (type === 'Description') {
+      setLectureDescriptionText(contents.descriptionText || '');
+      setDescriptionModalOpen(true);
+    }
+
+    if (type === 'Lecture Notes') {
+      setLectureNotesText(contents.notesText || '');
+      setLectureNotesFileName(contents.notesFileName || '');
+      setNotesModalOpen(true);
+    }
+  }
+
+  function getLectureContentSummary(lecture) {
+    const labels = [];
+
+    if (lecture.contents.videoFileName) labels.push('Video');
+    if (lecture.contents.attachFileName) labels.push('File');
+    if (lecture.contents.descriptionText) labels.push('Description');
+    if (lecture.contents.notesFileName || lecture.contents.notesText) labels.push('Notes');
+
+    return labels;
+  }
+
+  function goToStep(step) {
+    setSubmitError('');
+    setSubmitSuccess('');
+    setActiveStep(step);
+  }
+
+  function validateBasicStep() {
+    if (!title.trim() || !topic.trim() || !category || !courseLang || !level || !durationValue.trim()) {
+      setSubmitError('Title, topic, category, language, level aur duration required hain.');
+      return false;
+    }
+
+    return true;
+  }
+
+  function validateAdvanceStep() {
+    if (!courseDescription.trim() || !teachList.some((item) => item.trim()) || !whoForList.some((item) => item.trim())) {
+      setSubmitError('Description aur kam az kam ek learning point aur audience point required hai.');
+      return false;
+    }
+
+    return true;
+  }
+
+  function validateCurriculumStep() {
+    const hasValidCurriculum = curriculumSections.some(
+      (section) =>
+        section.title.trim() &&
+        section.lectures.some((lecture) => lecture.name.trim())
+    );
+
+    if (!hasValidCurriculum) {
+      setSubmitError('Curriculum mein kam az kam ek section aur ek lecture name required hai.');
+      return false;
+    }
+
+    return true;
+  }
+
+  async function handlePublish() {
+    setSubmitError('');
+    setSubmitSuccess('');
+
+    if (!validateBasicStep()) {
+      setActiveStep(0);
+      return;
+    }
+
+    if (!validateAdvanceStep()) {
+      setActiveStep(1);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await createCourse({
+        title,
+        subtitle,
+        topic,
+        category,
+        subCategory,
+        courseLang,
+        subtitleLang,
+        level,
+        durationValue,
+        durationUnit,
+        description: courseDescription,
+        thumbnailFileName,
+        thumbnailUrl,
+        trailerFileName,
+        teachList,
+        whoForList,
+        reqList,
+        curriculum: curriculumSections,
+        welcomeMessage,
+        congratulationsMessage,
+        lectureAssets: {
+          videoSection: lectureVideoSection,
+          videoFileName: lectureVideoFileName,
+          attachFileName: lectureAttachFileName,
+          descriptionText: lectureDescriptionText,
+          notesText: lectureNotesText,
+          notesFileName: lectureNotesFileName,
+        },
+      });
+
+      const savedCourse = response.course;
+
+      if (savedCourse?.title) {
+        addCurrentUserNotification({
+          text: `Your course "${savedCourse.title}" was submitted for admin approval.`,
+          type: 'info',
+        });
+        addNotification({
+          recipient: 'role:admin',
+          text: `A new course "${savedCourse.title}" is waiting for approval.`,
+          type: 'info',
+        });
+      }
+
+      setSubmitSuccess('Course backend mein save ho gaya hai.');
+      window.setTimeout(() => {
+        navigate('/inst/courses');
+      }, 900);
+    } catch (error) {
+      setSubmitError(error.message || 'Course save nahi ho saka.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#F6F8FB] flex">
@@ -243,10 +499,7 @@ export default function PublishNew() {
       <main className="flex-1 min-w-0 px-5 sm:px-8 lg:px-10 pt-0 pb-6 sm:pb-8">
         <div className="mb-5 sm:mb-6 flex flex-col gap-3">
           <div className="-mx-5 sm:-mx-8 lg:-mx-10 px-5 sm:px-8 lg:px-10 py-2.5 bg-white flex items-center justify-end gap-3 border-b border-[#EEF2F7]">
-            <div className="w-9 h-9 rounded-full bg-[#CBD5F5] shrink-0" />
-            <span className="text-sm font-medium text-[#111827]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-              John Doe
-            </span>
+            <InstructorUserBadge />
           </div>
           <h1 className="text-lg sm:text-xl font-semibold text-[#111827] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
             Publish New Course
@@ -288,12 +541,23 @@ export default function PublishNew() {
         </nav>
 
         <div className="bg-white rounded-2xl border border-[#EEF2F7] shadow-sm p-5 sm:p-6 lg:p-8">
+          {submitError ? (
+            <div className="mb-5 rounded-xl border border-[#FECACA] bg-[#FEF2F2] px-4 py-3 text-sm text-[#B91C1C]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+              {submitError}
+            </div>
+          ) : null}
+          {submitSuccess ? (
+            <div className="mb-5 rounded-xl border border-[#BBF7D0] bg-[#F0FDF4] px-4 py-3 text-sm text-[#166534]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+              {submitSuccess}
+            </div>
+          ) : null}
           {activeStep === 0 && (
             <form
               className="space-y-5"
               onSubmit={(e) => {
                 e.preventDefault();
-                setActiveStep((s) => Math.min(3, s + 1));
+                if (!validateBasicStep()) return;
+                goToStep(1);
               }}
             >
               <div>
@@ -438,7 +702,7 @@ export default function PublishNew() {
               <div className="flex flex-wrap justify-end gap-3 pt-4">
                 <button
                   type="button"
-                  onClick={() => setActiveStep(0)}
+                  onClick={() => goToStep(0)}
                   className="rounded-lg bg-[#F3F4F6] px-5 py-2.5 text-sm font-medium text-[#374151] hover:bg-[#E5E7EB] transition-colors"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -460,7 +724,8 @@ export default function PublishNew() {
               className="space-y-8"
               onSubmit={(e) => {
                 e.preventDefault();
-                setActiveStep(2);
+                if (!validateAdvanceStep()) return;
+                goToStep(2);
               }}
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -469,12 +734,20 @@ export default function PublishNew() {
                     Course Thumbnail
                   </h3>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <div className="w-full sm:w-44 h-36 shrink-0 rounded-xl bg-[#F3F4F6] flex items-center justify-center border border-[#E5E7EB]">
-                      <svg className="w-12 h-12 text-[#9CA3AF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-                        <rect x="3" y="5" width="18" height="14" rx="2" />
-                        <circle cx="8.5" cy="10" r="1.5" />
-                        <path d="M21 17l-5-5-4 4-3-3-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                    <div className="w-full sm:w-44 h-36 shrink-0 rounded-xl bg-[#F3F4F6] flex items-center justify-center border border-[#E5E7EB] overflow-hidden">
+                      {thumbnailUrl ? (
+                        <img
+                          src={thumbnailUrl}
+                          alt={thumbnailFileName || 'Course thumbnail preview'}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <svg className="w-12 h-12 text-[#9CA3AF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                          <rect x="3" y="5" width="18" height="14" rx="2" />
+                          <circle cx="8.5" cy="10" r="1.5" />
+                          <path d="M21 17l-5-5-4 4-3-3-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
                     </div>
                     <p className="m-0 flex-1 text-xs leading-relaxed text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Upload your course Thumbnail hero. Important guidelines: 1200×800 pixels or 12:8 Ratio. Supported format: .jpg,
@@ -486,9 +759,33 @@ export default function PublishNew() {
                       <path d="M12 16V4m0 0L8 8m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" strokeLinecap="round" />
                     </svg>
-                    Upload image
-                    <input type="file" accept=".jpg,.jpeg,.png" className="sr-only" />
+                    {thumbnailFileName ? 'Change image' : 'Upload image'}
+                    <input
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      className="sr-only"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) {
+                          setThumbnailFileName('');
+                          setThumbnailUrl('');
+                          return;
+                        }
+
+                        setThumbnailFileName(file.name);
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          setThumbnailUrl(typeof reader.result === 'string' ? reader.result : '');
+                        };
+                        reader.readAsDataURL(file);
+                      }}
+                    />
                   </label>
+                  {thumbnailFileName ? (
+                    <p className="mt-2 text-xs text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      Selected: {thumbnailFileName}
+                    </p>
+                  ) : null}
                 </div>
 
                 <div>
@@ -497,10 +794,16 @@ export default function PublishNew() {
                   </h3>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="w-full sm:w-44 h-36 shrink-0 rounded-xl bg-[#F3F4F6] flex items-center justify-center border border-[#E5E7EB]">
-                      <svg className="w-12 h-12 text-[#9CA3AF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-                        <rect x="3" y="6" width="14" height="12" rx="2" />
-                        <path d="M17 10l4-2v8l-4-2" strokeLinejoin="round" />
-                      </svg>
+                      {trailerFileName ? (
+                        <div className="px-4 text-center text-sm font-medium text-[#1E3A8A]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                          {trailerFileName}
+                        </div>
+                      ) : (
+                        <svg className="w-12 h-12 text-[#9CA3AF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+                          <rect x="3" y="6" width="14" height="12" rx="2" />
+                          <path d="M17 10l4-2v8l-4-2" strokeLinejoin="round" />
+                        </svg>
+                      )}
                     </div>
                     <p className="m-0 flex-1 text-xs leading-relaxed text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Students who watch a well-made promo video are 5X more likely to enroll in your course. Upload a short video that
@@ -512,9 +815,22 @@ export default function PublishNew() {
                       <path d="M12 16V4m0 0L8 8m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" strokeLinecap="round" />
                     </svg>
-                    Upload Video
-                    <input type="file" accept="video/*" className="sr-only" />
+                    {trailerFileName ? 'Change video' : 'Upload Video'}
+                    <input
+                      type="file"
+                      accept="video/*"
+                      className="sr-only"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        setTrailerFileName(file ? file.name : '');
+                      }}
+                    />
                   </label>
+                  {trailerFileName ? (
+                    <p className="mt-2 text-xs text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      Selected: {trailerFileName}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
@@ -533,6 +849,9 @@ export default function PublishNew() {
                   />
                   <RichTextToolbar />
                 </div>
+                <p className="mt-2 mb-0 text-xs text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  {courseDescription.trim().length > 0 ? `${courseDescription.trim().length} characters added` : 'Course description required'}
+                </p>
               </div>
 
               <ListBlock
@@ -559,7 +878,7 @@ export default function PublishNew() {
               <div className="flex flex-wrap justify-end gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setActiveStep(0)}
+                  onClick={() => goToStep(0)}
                   className="rounded-lg bg-[#F3F4F6] px-5 py-2.5 text-sm font-medium text-[#374151] hover:bg-[#E5E7EB] transition-colors"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -580,62 +899,76 @@ export default function PublishNew() {
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault();
-                setActiveStep(3);
+                if (!validateCurriculumStep()) return;
+                goToStep(3);
               }}
             >
-              <div className="rounded-xl bg-[#F3F4F6] border border-[#E5E7EB] p-4 sm:p-5 space-y-4">
-                <div className="flex items-center gap-2.5">
-                  <button type="button" className="p-1 text-[#111827] hover:bg-white/60 rounded" aria-label="Section menu">
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                      <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
-                    </svg>
-                  </button>
-                  <span className="text-sm font-semibold text-[#111827]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    Sections 01: Section name
-                  </span>
-                </div>
+              <div className="space-y-4">
+                {curriculumSections.map((section, sectionIndex) => (
+                  <div key={section.id} className="rounded-xl bg-[#F3F4F6] border border-[#E5E7EB] p-4 sm:p-5 space-y-4">
+                    <div className="flex items-center gap-2.5">
+                      <button type="button" className="p-1 text-[#111827] hover:bg-white/60 rounded" aria-label="Section menu">
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                          <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                      <input
+                        type="text"
+                        value={section.title}
+                        onChange={(e) => updateSectionTitle(sectionIndex, e.target.value)}
+                        className="min-w-0 flex-1 bg-transparent text-sm font-semibold text-[#111827] focus:outline-none"
+                        style={{ fontFamily: 'Manrope, sans-serif' }}
+                      />
+                    </div>
 
-                {[0, 1].map((idx) => {
-                  const isOpen = openLectureMenu === idx;
-                  return (
-                    <div key={idx} className="relative rounded-xl bg-white border border-[#E5E7EB] px-4 py-3.5 sm:px-5">
-                      <div className="flex flex-wrap items-center justify-between gap-3 min-h-[44px]">
-                        <span className="text-sm font-medium text-[#374151]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                          Lecture name
-                        </span>
-                        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                          <button
-                            type="button"
-                            onClick={() => setOpenLectureMenu(isOpen ? null : idx)}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-[#E9F1FF] px-4 py-2 text-sm font-medium text-[#2563EB] hover:bg-[#DBEAFE] transition-colors"
-                            style={{ fontFamily: 'Manrope, sans-serif' }}
-                          >
-                            Contents
-                            <svg
-                              className={`w-4 h-4 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              aria-hidden
-                            >
-                              <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </button>
-                          {isOpen && (
-                            <>
+                    {section.lectures.map((lecture, lectureIndex) => {
+                      const menuKey = getLectureMenuKey(sectionIndex, lectureIndex);
+                      const isOpen = openLectureMenu === menuKey;
+                      const contentSummary = getLectureContentSummary(lecture);
+
+                      return (
+                        <div key={lecture.id} className="relative rounded-xl bg-white border border-[#E5E7EB] px-4 py-3.5 sm:px-5">
+                          <div className="flex flex-wrap items-center justify-between gap-3 min-h-[44px]">
+                            <div className="min-w-0 flex-1">
+                              <input
+                                type="text"
+                                value={lecture.name}
+                                onChange={(e) => updateLectureName(sectionIndex, lectureIndex, e.target.value)}
+                                className="w-full bg-transparent text-sm font-medium text-[#374151] focus:outline-none"
+                                style={{ fontFamily: 'Manrope, sans-serif' }}
+                              />
+                              {contentSummary.length > 0 ? (
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                  {contentSummary.map((label) => (
+                                    <span key={label} className="rounded-full bg-[#EEF2FF] px-2.5 py-1 text-[11px] font-medium text-[#4338CA]">
+                                      {label}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : null}
+                            </div>
+                            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                               <button
                                 type="button"
-                                className="p-2 rounded-lg text-[#374151] hover:bg-[#F3F4F6]"
-                                aria-label="Edit lecture"
+                                onClick={() => setOpenLectureMenu(isOpen ? null : menuKey)}
+                                className="inline-flex items-center gap-1.5 rounded-full bg-[#E9F1FF] px-4 py-2 text-sm font-medium text-[#2563EB] hover:bg-[#DBEAFE] transition-colors"
+                                style={{ fontFamily: 'Manrope, sans-serif' }}
                               >
-                                <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                                  <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
-                                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                Contents
+                                <svg
+                                  className={`w-4 h-4 shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  aria-hidden
+                                >
+                                  <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                               </button>
                               <button
                                 type="button"
+                                onClick={() => removeLecture(sectionIndex, lectureIndex)}
                                 className="p-2 rounded-lg text-[#EF4444] hover:bg-red-50"
                                 aria-label="Delete lecture"
                               >
@@ -644,49 +977,42 @@ export default function PublishNew() {
                                   <path d="M10 11v6M14 11v6" strokeLinecap="round" />
                                 </svg>
                               </button>
-                            </>
-                          )}
-                        </div>
-                      </div>
+                            </div>
+                          </div>
 
-                      {isOpen && (
-                        <div className="absolute right-4 top-full z-10 mt-1 w-48 rounded-lg border border-[#E5E7EB] bg-white py-1 shadow-lg">
-                          {['Video', 'Attach File', 'Description', 'Lecture Notes'].map((label) => (
-                            <button
-                              key={label}
-                              type="button"
-                              onClick={() => {
-                                if (label === 'Video') {
-                                  setVideoModalOpen(true);
-                                  setOpenLectureMenu(null);
-                                }
-                                if (label === 'Attach File') {
-                                  setAttachModalOpen(true);
-                                  setOpenLectureMenu(null);
-                                }
-                                if (label === 'Description') {
-                                  setDescriptionModalOpen(true);
-                                  setOpenLectureMenu(null);
-                                }
-                                if (label === 'Lecture Notes') {
-                                  setNotesModalOpen(true);
-                                  setOpenLectureMenu(null);
-                                }
-                              }}
-                              className="w-full px-3 py-2 text-left text-sm text-[#6B7280] hover:bg-[#F9FAFB] hover:text-[#111827]"
-                              style={{ fontFamily: 'Manrope, sans-serif' }}
-                            >
-                              {label}
-                            </button>
-                          ))}
+                          {isOpen ? (
+                            <div className="absolute right-4 top-full z-10 mt-1 w-48 rounded-lg border border-[#E5E7EB] bg-white py-1 shadow-lg">
+                              {['Video', 'Attach File', 'Description', 'Lecture Notes'].map((label) => (
+                                <button
+                                  key={label}
+                                  type="button"
+                                  onClick={() => openContentModal(label, sectionIndex, lectureIndex)}
+                                  className="w-full px-3 py-2 text-left text-sm text-[#6B7280] hover:bg-[#F9FAFB] hover:text-[#111827]"
+                                  style={{ fontFamily: 'Manrope, sans-serif' }}
+                                >
+                                  {label}
+                                </button>
+                              ))}
+                            </div>
+                          ) : null}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+
+                    <button
+                      type="button"
+                      onClick={() => addLecture(sectionIndex)}
+                      className="w-full rounded-lg border border-dashed border-[#BFDBFE] bg-white py-3 text-sm font-medium text-[#2563EB] hover:bg-[#F8FBFF] transition-colors"
+                      style={{ fontFamily: 'Manrope, sans-serif' }}
+                    >
+                      Add Lecture
+                    </button>
+                  </div>
+                ))}
 
                 <button
                   type="button"
+                  onClick={addSection}
                   className="w-full rounded-lg bg-[#E9F1FF] py-3 text-sm font-medium text-[#2563EB] hover:bg-[#DBEAFE] transition-colors"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -697,7 +1023,7 @@ export default function PublishNew() {
               <div className="flex flex-wrap justify-end gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setActiveStep(1)}
+                  onClick={() => goToStep(1)}
                   className="rounded-lg bg-[#F3F4F6] px-5 py-2.5 text-sm font-medium text-[#374151] hover:bg-[#E5E7EB] transition-colors"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -726,6 +1052,8 @@ export default function PublishNew() {
                       Welcome Message
                     </div>
                     <textarea
+                      value={welcomeMessage}
+                      onChange={(e) => setWelcomeMessage(e.target.value)}
                       rows={4}
                       placeholder="Enter course starting message here..."
                       className="w-full rounded-xl border border-[#E5E7EB] bg-white px-4 py-3 text-sm text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-1 focus:ring-[#2563EB] resize-none"
@@ -738,6 +1066,8 @@ export default function PublishNew() {
                       Congratulations Message
                     </div>
                     <textarea
+                      value={congratulationsMessage}
+                      onChange={(e) => setCongratulationsMessage(e.target.value)}
                       rows={4}
                       placeholder="Enter your course completed message here..."
                       className="w-full rounded-xl border border-[#E5E7EB] bg-white px-4 py-3 text-sm text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-1 focus:ring-[#2563EB] resize-none"
@@ -808,7 +1138,7 @@ export default function PublishNew() {
               <div className="flex flex-wrap justify-end gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setActiveStep(2)}
+                  onClick={() => goToStep(2)}
                   className="rounded-lg bg-[#F3F4F6] px-5 py-2.5 text-sm font-medium text-[#374151] hover:bg-[#E5E7EB] transition-colors"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -816,11 +1146,12 @@ export default function PublishNew() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => {}}
-                  className="rounded-lg bg-[#2563EB] px-6 py-2.5 text-sm font-medium text-white hover:bg-[#1D4ED8] transition-colors"
+                  onClick={handlePublish}
+                  disabled={isSubmitting}
+                  className="rounded-lg bg-[#2563EB] px-6 py-2.5 text-sm font-medium text-white hover:bg-[#1D4ED8] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
-                  Publish
+                  {isSubmitting ? 'Publishing...' : 'Publish'}
                 </button>
               </div>
             </div>
@@ -850,14 +1181,14 @@ export default function PublishNew() {
 
             <div className="mt-6">
               <label className="block text-sm font-semibold text-[#111827] mb-2" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                Section
+                Lecture Video
               </label>
               <div className="flex items-center gap-0 rounded-full border border-[#BFDBFE] bg-white pl-4 pr-1 py-1 focus-within:ring-2 focus-within:ring-[#2563EB]/20">
                 <input
                   type="text"
                   value={lectureVideoSection}
-                  onChange={(e) => setLectureVideoSection(e.target.value)}
-                  placeholder="Write your section name here.."
+                  readOnly
+                  placeholder="Upload video to attach with this lecture"
                   className="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-sm text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-0"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 />
@@ -869,15 +1200,53 @@ export default function PublishNew() {
                     className="sr-only"
                     onChange={(e) => {
                       const f = e.target.files?.[0];
-                      setLectureVideoFileName(f ? f.name : '');
+                      if (!f) {
+                        setLectureVideoFileName('');
+                        setLectureVideoSection('');
+                        setLectureVideoError('');
+                        return;
+                      }
+
+                      setLectureVideoFileName(f.name);
+                      setLectureVideoError('');
+
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        setLectureVideoSection(typeof reader.result === 'string' ? reader.result : '');
+                      };
+                      reader.onerror = () => {
+                        setLectureVideoSection('');
+                        setLectureVideoError('Video read nahi ho saki. Dobara upload karein.');
+                      };
+                      reader.readAsDataURL(f);
                     }}
                   />
                 </label>
               </div>
+              {lectureVideoFileName ? (
+                <p className="mt-2 text-xs text-[#64748B]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Selected video: {lectureVideoFileName}
+                </p>
+              ) : null}
+              {lectureVideoError ? (
+                <p className="mt-2 text-xs text-[#DC2626]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  {lectureVideoError}
+                </p>
+              ) : null}
               <p className="mt-2 text-xs text-[#94A3B8]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                 All files should be at least 720p and less than 4.0 GB.
               </p>
             </div>
+
+            {lectureVideoSection ? (
+              <div className="mt-4 overflow-hidden rounded-2xl border border-[#E5E7EB] bg-[#0F172A]">
+                <video
+                  src={lectureVideoSection}
+                  controls
+                  className="h-56 w-full object-cover"
+                />
+              </div>
+            ) : null}
 
             <div className="mt-8 flex flex-wrap justify-end gap-3">
               <button
@@ -895,6 +1264,10 @@ export default function PublishNew() {
                 style={{ fontFamily: 'Manrope, sans-serif' }}
                 onClick={() => {
                   if (!canSubmitLectureVideo) return;
+                  updateSelectedLectureContents({
+                    videoSection: lectureVideoSection,
+                    videoFileName: lectureVideoFileName,
+                  });
                   closeVideoModal();
                 }}
               >
@@ -966,6 +1339,9 @@ export default function PublishNew() {
                 style={{ fontFamily: 'Manrope, sans-serif' }}
                 onClick={() => {
                   if (!canSubmitLectureAttachFile) return;
+                  updateSelectedLectureContents({
+                    attachFileName: lectureAttachFileName,
+                  });
                   closeAttachModal();
                 }}
               >
@@ -1032,6 +1408,9 @@ export default function PublishNew() {
                 style={{ fontFamily: 'Manrope, sans-serif' }}
                 onClick={() => {
                   if (!canSubmitLectureDescription) return;
+                  updateSelectedLectureContents({
+                    descriptionText: lectureDescriptionText,
+                  });
                   closeDescriptionModal();
                 }}
               >
@@ -1127,6 +1506,10 @@ export default function PublishNew() {
                 style={{ fontFamily: 'Manrope, sans-serif' }}
                 onClick={() => {
                   if (!canSubmitLectureNotes) return;
+                  updateSelectedLectureContents({
+                    notesText: lectureNotesText,
+                    notesFileName: lectureNotesFileName,
+                  });
                   closeNotesModal();
                 }}
               >

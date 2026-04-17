@@ -1,16 +1,73 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import AuthShell from './AuthShell';
-import { getDashboardPath, persistAuth, signup } from '../utils/authApi';
+import { getDashboardPath, googleAuth, persistAuth, signup } from '../utils/authApi';
+import { mountGoogleButton } from '../utils/googleAuth';
 
 export default function SignupDetails() {
   const location = useLocation();
   const navigate = useNavigate();
+  const googleButtonRef = useRef(null);
   const role = location.state?.role || sessionStorage.getItem('signupRole');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
+  const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+  useEffect(() => {
+    let cleanup;
+    let isMounted = true;
+
+    async function initializeGoogleButton() {
+      if (!googleButtonRef.current || !googleClientId || !role) {
+        return;
+      }
+
+      try {
+        cleanup = await mountGoogleButton(googleButtonRef.current, {
+          clientId: googleClientId,
+          text: 'continue_with',
+          onCredential: async (credential) => {
+            setError('');
+            setIsGoogleSubmitting(true);
+
+            try {
+              const data = await googleAuth({ credential, mode: 'signup', role });
+              persistAuth(data);
+              sessionStorage.removeItem('signupRole');
+              navigate(getDashboardPath(data.user.role));
+            } catch (err) {
+              if (isMounted) {
+                setError(err.message);
+              }
+            } finally {
+              if (isMounted) {
+                setIsGoogleSubmitting(false);
+              }
+            }
+          },
+          onError: (err) => {
+            if (isMounted) {
+              setError(err.message);
+            }
+          },
+        });
+      } catch (err) {
+        if (isMounted) {
+          setError(err.message);
+        }
+      }
+    }
+
+    initializeGoogleButton();
+
+    return () => {
+      isMounted = false;
+      cleanup?.();
+    };
+  }, [googleClientId, navigate, role]);
 
   if (!role) {
     return <Navigate to="/signup" replace />;
@@ -45,15 +102,21 @@ export default function SignupDetails() {
           </p>
         </div>
 
-        <button
-          type="button"
-          className="flex h-14 w-full items-center justify-center gap-3 rounded-[14px] bg-[#EFEFEF] text-[18px] font-medium text-[#1D1D1F] transition-colors hover:bg-[#E7E7E7]"
-        >
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-white text-[20px] font-semibold text-[#4285F4] shadow-sm">
-            G
-          </span>
-          <span>Continue with Google</span>
-        </button>
+        {googleClientId ? (
+          <div className="space-y-3">
+            <div
+              ref={googleButtonRef}
+              className="flex min-h-14 w-full items-center justify-center overflow-hidden rounded-[999px] bg-white"
+            />
+            {isGoogleSubmitting ? (
+              <p className="text-center text-[14px] text-[#6E6E6E]">Creating account with Google...</p>
+            ) : null}
+          </div>
+        ) : (
+          <div className="rounded-[14px] border border-[#E2E7F0] bg-[#F7F9FC] px-4 py-4 text-center text-[15px] text-[#667085]">
+            Google Sign-In is unavailable because `REACT_APP_GOOGLE_CLIENT_ID` is not configured.
+          </div>
+        )}
 
         <div className="my-8 flex items-center gap-4 text-[18px] text-[#8B8B8B]">
           <span className="h-px flex-1 bg-[#DFDFDF]" />

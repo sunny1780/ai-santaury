@@ -21,10 +21,12 @@ import SEO from './pages/SEO';
 import AllOnlineCourses from './component/Dashboard/AllOnlineCourses';
 import Notifications from './component/Dashboard/Notifications';
 import MyLearnings from './component/Dashboard/MyLearnings';
+import StudentCourseDetails from './component/Dashboard/StudentCourseDetails';
 import MyCertificates from './component/Dashboard/MyCertificates';
 import Settings from './component/Dashboard/Settings';
 import InstDashboard from './component/InstDashboard/Dashboard';
 import InstCourses from './component/InstDashboard/Courses';
+import InstCourseDetails from './component/InstDashboard/CourseDetails';
 import PublishNew from './component/InstDashboard/PublishNew';
 import Dashboard from './component/Dashboard/Dashboard';
 import InstInstructors from './component/InstDashboard/Instructors';
@@ -35,6 +37,7 @@ import SignupDetails from './component/SignupDetails';
 import Login from './component/Login';
 import ForgotPassword from './component/ForgotPassword';
 import ResetPassword from './component/ResetPassword';
+import AdminCourses from './component/Admin/AdminCourses';
 
 function HomePage() {
   return (
@@ -79,6 +82,7 @@ function App() {
         <Route path="/dashboard/explore" element={<AllOnlineCourses />} />
         <Route path="/dashboard/notifications" element={<Notifications />} />
         <Route path="/dashboard/learnings" element={<MyLearnings />} />
+        <Route path="/dashboard/learnings/:courseId" element={<StudentCourseDetails />} />
         <Route path="/dashboard/certificates" element={<MyCertificates />} />
         <Route path="/dashboard/settings" element={<Settings />} />
 
@@ -86,9 +90,11 @@ function App() {
         <Route path="/inst/dashboard" element={<InstDashboard />} />
         <Route path="/inst/instructors" element={<InstInstructors />} />
         <Route path="/inst/courses" element={<InstCourses />} />
+        <Route path="/inst/courses/:courseId" element={<InstCourseDetails />} />
         <Route path="/inst/publish" element={<PublishNew />} />
         <Route path="/inst/notifications" element={<InstNotifications />} />
         <Route path="/inst/settings" element={<InstSettings />} />
+        <Route path="/admin/courses" element={<AdminCourses />} />
       </Routes>
     </BrowserRouter>
   );

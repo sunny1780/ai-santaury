@@ -1,4 +1,5 @@
 import Sidebaar from './Sidebaar';
+import InstructorUserBadge from './InstructorUserBadge';
 
 const dicon = (n) => `${process.env.PUBLIC_URL}/images/Dicons/${n}.svg`;
 
@@ -33,11 +34,8 @@ export default function Dashboard() {
           <h1 className="text-lg sm:text-xl font-semibold text-[#111827] m-0" style={{ fontFamily: 'Manrope, sans-serif' }}>
             Dashboard
           </h1>
-          <div className="hidden sm:flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#CBD5F5]" />
-            <span className="text-sm font-medium text-[#111827]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-              John Doe
-            </span>
+          <div className="hidden sm:block">
+            <InstructorUserBadge />
           </div>
         </div>
 
@@ -170,4 +168,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

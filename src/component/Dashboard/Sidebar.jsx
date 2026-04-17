@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const DashboardIcon = ({ className = 'w-4 h-4' }) => (
   <svg className={className} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -115,6 +116,73 @@ const bottomItems = [
 ];
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const [authUser, setAuthUser] = useState(null);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef(null);
+
+  useEffect(() => {
+    function syncAuthUser() {
+      try {
+        const storedUser = localStorage.getItem('authUser');
+        setAuthUser(storedUser ? JSON.parse(storedUser) : null);
+      } catch (error) {
+        setAuthUser(null);
+      }
+    }
+
+    syncAuthUser();
+    window.addEventListener('storage', syncAuthUser);
+
+    return () => {
+      window.removeEventListener('storage', syncAuthUser);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handlePointerDown(event) {
+      if (!profileMenuRef.current?.contains(event.target)) {
+        setIsProfileMenuOpen(false);
+      }
+    }
+
+    function handleEscape(event) {
+      if (event.key === 'Escape') {
+        setIsProfileMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
+  function extractUsernameFromEmail(email) {
+    if (!email || typeof email !== 'string') return null;
+    const [username] = email.split('@');
+    return username || null;
+  }
+
+  const displayName = authUser
+    ? authUser.name ||
+      authUser.fullName ||
+      authUser.firstName ||
+      extractUsernameFromEmail(authUser.email) ||
+      'Profile'
+    : 'Profile';
+
+  function handleLogout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('authUser');
+    setAuthUser(null);
+    setIsProfileMenuOpen(false);
+    navigate('/');
+  }
+
   return (
     <aside className="sticky top-0 h-screen w-64 bg-white border-r border-[#E5E7EB] flex flex-col px-4 pt-6 pb-6">
       <div className="flex-1">
@@ -172,8 +240,71 @@ export default function Sidebar() {
             </NavLink>
           ))}
         </nav>
+
+        <div className="mt-4 relative" ref={profileMenuRef}>
+          <button
+            type="button"
+            onClick={() => setIsProfileMenuOpen((open) => !open)}
+            className="flex w-full items-center gap-3 rounded-xl border border-[#E5ECF8] px-3 py-2.5 text-left transition-colors hover:bg-[#F8FAFF]"
+            aria-haspopup="menu"
+            aria-expanded={isProfileMenuOpen}
+          >
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#CBD5F5] text-sm font-semibold text-[#1E3A8A]">
+              {displayName.charAt(0).toUpperCase()}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div
+                className="truncate text-sm font-semibold text-[#111827]"
+                style={{ fontFamily: 'Manrope, sans-serif' }}
+                title={authUser?.email || displayName}
+              >
+                {displayName}
+              </div>
+              <div
+                className="text-xs text-[#6B7280]"
+                style={{ fontFamily: 'Manrope, sans-serif' }}
+              >
+                Profile
+              </div>
+            </div>
+            <svg
+              className={`h-4 w-4 shrink-0 text-[#6B7280] transition-transform ${isProfileMenuOpen ? 'rotate-180' : ''}`}
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden
+            >
+              <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          {isProfileMenuOpen ? (
+            <div
+              className="absolute bottom-[calc(100%+10px)] left-0 right-0 overflow-hidden rounded-2xl border border-[#E5ECF8] bg-white py-2 shadow-[0_18px_42px_rgba(15,23,42,0.14)]"
+              role="menu"
+            >
+              <NavLink
+                to="/dashboard"
+                end
+                className="block px-4 py-2.5 text-[14px] font-medium text-[#162D66] no-underline transition-colors hover:bg-[#F4F8FF]"
+                style={{ letterSpacing: '0.005em' }}
+                role="menuitem"
+                onClick={() => setIsProfileMenuOpen(false)}
+              >
+                Dashboard
+              </NavLink>
+              <button
+                type="button"
+                className="block w-full bg-transparent px-4 py-2.5 text-left text-[14px] font-medium text-[#B42318] transition-colors hover:bg-[#FFF5F4]"
+                style={{ letterSpacing: '0.005em' }}
+                role="menuitem"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </aside>
   );
 }
-

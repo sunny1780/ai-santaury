@@ -1,24 +1,35 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Sidebaar from './Sidebaar';
-
-const dummyNotifications = Array.from({ length: 30 }).map((_, idx) => ({
-  id: idx + 1,
-  text: 'You have a new notification',
-  time: '17:45',
-}));
+import InstructorUserBadge from './InstructorUserBadge';
+import { formatNotificationTime, getCurrentUserNotifications } from '../../utils/notificationStore';
 
 export default function InstNotifications() {
   const pageSize = 10;
   const [page, setPage] = useState(1);
+  const [notifications, setNotifications] = useState(() => getCurrentUserNotifications());
 
-  const total = dummyNotifications.length;
+  useEffect(() => {
+    function syncNotifications() {
+      setNotifications(getCurrentUserNotifications());
+    }
+
+    window.addEventListener('storage', syncNotifications);
+    window.addEventListener('notifications-updated', syncNotifications);
+
+    return () => {
+      window.removeEventListener('storage', syncNotifications);
+      window.removeEventListener('notifications-updated', syncNotifications);
+    };
+  }, []);
+
+  const total = notifications.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const safePage = Math.min(Math.max(page, 1), totalPages);
 
   const pageItems = useMemo(() => {
     const start = (safePage - 1) * pageSize;
-    return dummyNotifications.slice(start, start + pageSize);
-  }, [safePage]);
+    return notifications.slice(start, start + pageSize);
+  }, [notifications, safePage]);
 
   const startLabel = String((safePage - 1) * pageSize + 1).padStart(2, '0');
   const endLabel = String(Math.min(safePage * pageSize, total)).padStart(2, '0');
@@ -29,11 +40,8 @@ export default function InstNotifications() {
 
       <main className="flex-1 px-4 sm:px-8 lg:px-10 py-6 sm:py-8">
         <div className="flex items-center justify-end mb-6 sm:mb-8">
-          <div className="hidden sm:flex items-center gap-3">
-            <span className="text-sm font-medium text-[#111827]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-              John Doe
-            </span>
-            <div className="w-9 h-9 rounded-full bg-[#CBD5F5]" />
+          <div className="hidden sm:block">
+            <InstructorUserBadge />
           </div>
         </div>
 
@@ -53,14 +61,18 @@ export default function InstNotifications() {
           </div>
 
           <div className="divide-y divide-[#F3F4F6]">
-            {pageItems.map((n) => (
+            {pageItems.length > 0 ? pageItems.map((n) => (
               <div key={n.id} className="grid grid-cols-[1fr_110px] px-5 sm:px-6 py-3 text-sm text-[#111827]">
                 <div style={{ fontFamily: 'Manrope, sans-serif' }}>{n.text}</div>
                 <div className="text-right text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                  {n.time}
+                  {formatNotificationTime(n.createdAt)}
                 </div>
               </div>
-            ))}
+            )) : (
+              <div className="px-5 sm:px-6 py-8 text-sm text-[#6B7280]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                Abhi koi notification available nahi hai.
+              </div>
+            )}
           </div>
         </div>
 
