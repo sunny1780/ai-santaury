@@ -107,7 +107,7 @@ export default function Footer() {
         <div className="text-center lg:text-right">
           <div className="flex items-center gap-3 justify-center lg:justify-end mb-4">
             <img
-              src={`${process.env.PUBLIC_URL}/images/looogo.png`}
+              src={`${process.env.PUBLIC_URL}/images/llogo.png`}
               alt="AI Sanctuary"
               className="h-10 lg:h-14 w-auto"
             />

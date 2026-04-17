@@ -95,7 +95,7 @@ export default function Sidebaar() {
     <aside className="sticky top-0 h-screen w-64 bg-white border-r border-[#E5E7EB] flex flex-col px-4 pt-6 pb-6">
       <div className="mb-6 flex items-center justify-start px-1">
         <img
-          src={`${process.env.PUBLIC_URL}/images/mainlogo.svg`}
+          src={`${process.env.PUBLIC_URL}/images/llogo.png`}
           alt="AI Sanctuary"
           className="h-16 w-auto max-w-[320px]"
         />

@@ -189,7 +189,7 @@ export default function Sidebar() {
         {/* Logo (above navigation) */}
         <div className="mb-6 flex items-center justify-start px-1">
           <img
-            src={`${process.env.PUBLIC_URL}/images/mainlogo.svg`}
+            src={`${process.env.PUBLIC_URL}/images/llogo.png`}
             alt="AI Sanctuary"
             className="h-16 w-auto max-w-[320px]"
           />

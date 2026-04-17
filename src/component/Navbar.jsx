@@ -93,12 +93,15 @@ export default function Navbar() {
     <nav className="relative w-full px-4 sm:px-8 lg:px-[80px] py-4 bg-white">
       <div className="max-w-[1080px] mx-auto flex items-center justify-between">
       {/* Logo */}
-      <Link to="/" className="flex items-center gap-3">
+      <Link to="/" className="flex items-center gap-2">
         <img
-          src={`${process.env.PUBLIC_URL}/images/Logo (1).png`}
+          src={`${process.env.PUBLIC_URL}/images/llogo.png`}
           alt="AI Sanctuary"
-          className="h-8 sm:h-10 w-auto object-contain"
+          className="h-14 sm:h-12 w-auto object-contain"
         />
+        {/* <span className="text-[8px] sm:text-[10px] font-bold text-[#162D66] tracking-tight leading-none">
+        An EMO Foundation Initiative
+        </span> */}
       </Link>
 
       {/* Desktop Navigation */}

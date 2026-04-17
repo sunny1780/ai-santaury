@@ -59,7 +59,7 @@ export default function AuthShell({
           <div className="flex items-start justify-between gap-6 pt-2 sm:pt-4">
             <Link to="/" className="inline-flex items-center">
               <img
-                src={`${process.env.PUBLIC_URL}/images/mainlogo.svg`}
+                src={`${process.env.PUBLIC_URL}/images/llogo.png`}
                 alt="AI Sanctuary"
                 className="h-11 w-auto sm:h-14"
               />
