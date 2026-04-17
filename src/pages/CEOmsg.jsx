@@ -18,7 +18,7 @@ export default function CEOmsg() {
               <div className="mt-1 h-10 w-1.5 rounded-full bg-[#162D66]" />
               <div>
                 <h1 className="text-3xl font-bold tracking-[0.01em] text-[#162D66] sm:text-4xl">
-                  Welcome Message From Our CEO
+                  Welcome Message From Our Founder
                 </h1>
               </div>
             </div>
@@ -35,13 +35,14 @@ export default function CEOmsg() {
 
               <div>
                 <h2 className="text-3xl font-bold text-[#162D66]">Amir Abbasi</h2>
-                <p className="mt-1 text-xl text-[#4B5563]">Company CEO</p>
+                <p className="mt-1 text-xl text-[#4B5563]">Foundation Founder</p>
 
                 <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[#4B5563]">
                 At AI Sanctuary, we believe knowledge is the strongest bridge to opportunity. Founded by Amir Abbasi, an IT professional with 22 years of experience, based out of Los Angeles, California, USA, our mission is to make digital education universally accessible and ignite real-world digital awareness in communities often left behind by economic, geographic, or social barriers.
+                </p>
+                <p className="mt-6 max-w-2xl text-[17px] leading-8 text-[#4B5563]">
                 We empower individuals to step confidently into the digital age through learning experiences led by practicing professionals—teachers who live what they teach. Through mentorship, hands-on education, and community-driven innovation, we transform curiosity into capability and talent into tomorrow’s workforce.
                 </p>
-
                 <p className="mt-5 max-w-2xl text-[17px] leading-8 text-[#4B5563]">
                 Our purpose is simple yet powerful: to ensure no mind is disconnected from progress. Whether you’re learning, teaching, or contributing, join us in building a future where every community thrives through digital enlightenment.
                 </p>
