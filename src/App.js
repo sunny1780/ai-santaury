@@ -14,6 +14,7 @@ import About from './pages/About';
 import Courses from './pages/Courses';
 import ThreeDays from './pages/ThreeDays';
 import Contactus from './pages/Contactus';
+import CEOmsg from './pages/CEOmsg';
 import UIUX from './pages/UIUX';
 import Python from './pages/Python';
 import Website from './pages/Website';
@@ -66,6 +67,7 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/three-days" element={<ThreeDays />} />
         <Route path="/contact" element={<Contactus />} />
+        <Route path="/our-mission" element={<CEOmsg />} />
         <Route path="/uiux" element={<UIUX />} />
         <Route path="/python" element={<Python />} />
         <Route path="/website" element={<Website />} />
