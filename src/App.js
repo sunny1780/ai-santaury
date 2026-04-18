@@ -19,6 +19,13 @@ import UIUX from './pages/UIUX';
 import Python from './pages/Python';
 import Website from './pages/Website';
 import SEO from './pages/SEO';
+import VideoEditing from './pages/VideoEditing';
+import EnglishLevelOne from './pages/Englishlevelone';
+import EnglishLevelTwo from './pages/Englishleveltwo';
+import QualityAssurance from './pages/Qualityassurance';
+import MetaMarketing from './pages/Metamarketing';
+import PromptEngineering from './pages/PromptEngineering';
+import Amazon from './pages/Amazon';
 import AllOnlineCourses from './component/Dashboard/AllOnlineCourses';
 import Notifications from './component/Dashboard/Notifications';
 import MyLearnings from './component/Dashboard/MyLearnings';
@@ -72,6 +79,13 @@ function App() {
         <Route path="/python" element={<Python />} />
         <Route path="/website" element={<Website />} />
         <Route path="/seo" element={<SEO />} />
+        <Route path="/video-editing" element={<VideoEditing />} />
+        <Route path="/english-level-one" element={<EnglishLevelOne />} />
+        <Route path="/english-level-two" element={<EnglishLevelTwo />} />
+        <Route path="/quality-assurance" element={<QualityAssurance />} />
+        <Route path="/meta-marketing" element={<MetaMarketing />} />
+        <Route path="/prompt-engineering" element={<PromptEngineering />} />
+        <Route path="/amazon-selling" element={<Amazon />} />
         <Route path="/signup" element={<RoleSelection />} />
         <Route path="/signup/details" element={<SignupDetails />} />
         <Route path="/login" element={<Login />} />

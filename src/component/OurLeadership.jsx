@@ -21,7 +21,7 @@ const teamMembers = [
     image: '3.png',
   },
   {
-    name: 'Steve',
+    name: 'Stephen Hill',
     role: 'English Communication',
     description: 'Building bridges in the community',
     image: '4.png',
