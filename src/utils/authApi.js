@@ -3,14 +3,29 @@ const API_BASE_URL =
 
 async function request(path, options = {}) {
   const token = localStorage.getItem('authToken');
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...(options.headers || {}),
-    },
-    ...options,
-  });
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+  let response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(options.headers || {}),
+      },
+      signal: controller.signal,
+      ...options,
+    });
+  } catch (fetchError) {
+    if (fetchError.name === 'AbortError') {
+      throw new Error('Request timed out. Please check your connection and try again.');
+    }
+    throw new Error('Unable to connect to server. Please try again.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   let data = {};
   let rawText = '';
