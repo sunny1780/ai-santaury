@@ -56,6 +56,18 @@ const teamMembers = [
     description: 'Description for member 9',
     image: '9.png',
   },
+  {
+    name: 'Areeba Ali Khan',
+    role: 'English Communication',
+    description: 'Driving innovation through AI and data',
+    image: 'areeba.png',
+  },
+  {
+    name: 'Daniyal Akhtar',
+    role: 'Video Editor',
+    description: 'Crafting seamless digital experiences',
+    image: 'Daniyal.png',
+  },
 ];
 
 const TeamCard = ({ name, role, description, image }) => (
