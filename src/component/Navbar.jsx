@@ -63,8 +63,8 @@ export default function Navbar() {
         href: authUser.role === 'instructor' ? '/inst/dashboard' : '/dashboard',
       }
     : {
-        label: 'Sign up',
-        href: '/signup',
+        label: 'Login',
+        href: '/login',
       };
 
   // derive a display name and avatar for the header when the user is logged in

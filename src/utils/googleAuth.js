@@ -1,6 +1,9 @@
 const GOOGLE_SCRIPT_SRC = 'https://accounts.google.com/gsi/client';
 
 let googleScriptPromise;
+let initializedClientId = '';
+let activeCredentialHandler = null;
+let activeErrorHandler = null;
 
 function loadGoogleScript() {
   if (window.google?.accounts?.id) {
@@ -51,17 +54,23 @@ export async function mountGoogleButton(container, options) {
     throw new Error('Google Sign-In is unavailable');
   }
 
-  google.accounts.id.initialize({
-    client_id: clientId,
-    callback: (response) => {
-      if (!response?.credential) {
-        onError?.(new Error('Google did not return a valid credential'));
-        return;
-      }
+  activeCredentialHandler = onCredential;
+  activeErrorHandler = onError;
 
-      onCredential(response.credential);
-    },
-  });
+  if (initializedClientId !== clientId) {
+    google.accounts.id.initialize({
+      client_id: clientId,
+      callback: (response) => {
+        if (!response?.credential) {
+          activeErrorHandler?.(new Error('Google did not return a valid credential'));
+          return;
+        }
+
+        activeCredentialHandler?.(response.credential);
+      },
+    });
+    initializedClientId = clientId;
+  }
 
   container.innerHTML = '';
   google.accounts.id.renderButton(container, {
@@ -75,6 +84,8 @@ export async function mountGoogleButton(container, options) {
   });
 
   return () => {
+    activeCredentialHandler = null;
+    activeErrorHandler = null;
     container.innerHTML = '';
   };
 }

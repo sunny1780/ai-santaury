@@ -140,15 +140,6 @@ export default function Login() {
             />
           </label>
 
-          <div className="flex justify-end">
-            <Link
-              to="/forgot-password"
-              className="text-[16px] font-medium text-[#1A8CF0] no-underline transition-colors hover:text-[#0F7FDE]"
-            >
-              Forgot password?
-            </Link>
-          </div>
-
           {error ? (
             <div className="rounded-[10px] bg-[#FEECEC] px-4 py-3 text-[15px] text-[#D14343]">
               {error}
@@ -162,6 +153,22 @@ export default function Login() {
           >
             {isSubmitting ? 'Logging In...' : 'Log In'}
           </button>
+
+          <div className="flex items-center justify-center gap-3 text-[15px]">
+            <Link
+              to="/forgot-password"
+              className="font-medium text-[#1A8CF0] no-underline transition-colors hover:text-[#0F7FDE]"
+            >
+              Forget Password
+            </Link>
+            <span className="font-medium text-[#98A2B3]">OR</span>
+            <Link
+              to="/signup"
+              className="font-medium text-[#1A8CF0] no-underline transition-colors hover:text-[#0F7FDE]"
+            >
+              Create new account
+            </Link>
+          </div>
         </form>
 
         <p className="mx-auto mt-8 max-w-[390px] text-center text-[15px] leading-7 text-[#6E6E6E]">

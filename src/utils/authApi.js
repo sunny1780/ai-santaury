@@ -5,7 +5,8 @@ async function request(path, options = {}) {
   const token = localStorage.getItem('authToken');
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 20000);
+  // Production/serverless cold starts can take longer on first request.
+  const timeoutId = setTimeout(() => controller.abort(), 45000);
 
   let response;
   try {
@@ -20,7 +21,7 @@ async function request(path, options = {}) {
     });
   } catch (fetchError) {
     if (fetchError.name === 'AbortError') {
-      throw new Error('Request timed out. Please check your connection and try again.');
+      throw new Error('Server response mein zyada time lag raha hai. Thori dair baad dobara try karein.');
     }
     throw new Error('Unable to connect to server. Please try again.');
   } finally {
