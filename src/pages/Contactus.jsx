@@ -4,7 +4,7 @@ import Footer from '../component/Footer';
 import Heading2 from '../component/Headings';
 import Description from '../component/Descriptions';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 export default function Contactus() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -16,7 +16,7 @@ export default function Contactus() {
     setStatus(null);
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/api/contact`, {
+      const res = await fetch(`${API_BASE}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
