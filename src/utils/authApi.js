@@ -91,6 +91,11 @@ async function request(path, options = {}) {
   return data;
 }
 
+// Silently pings the backend so serverless function is warm before user submits login.
+export function warmup() {
+  fetch(`${API_BASE_URL.replace('/api', '')}/api/health`, { method: 'GET' }).catch(() => {});
+}
+
 export function signup(payload) {
   return request('/auth/signup', {
     method: 'POST',

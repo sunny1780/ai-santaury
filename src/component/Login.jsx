@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthShell from './AuthShell';
-import { getDashboardPath, googleAuth, login, persistAuth } from '../utils/authApi';
+import { getDashboardPath, googleAuth, login, persistAuth, warmup } from '../utils/authApi';
 import { mountGoogleButton } from '../utils/googleAuth';
 
 export default function Login() {
@@ -13,6 +13,11 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
   const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+  // Silently ping backend when page loads so it is warm by the time user clicks Log In.
+  useEffect(() => {
+    warmup();
+  }, []);
 
   useEffect(() => {
     let cleanup;
