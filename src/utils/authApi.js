@@ -1,31 +1,64 @@
 const API_BASE_URL =
   process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 async function request(path, options = {}) {
   const token = localStorage.getItem('authToken');
 
-  const controller = new AbortController();
-  // Production/serverless cold starts can take longer on first request.
-  const timeoutId = setTimeout(() => controller.abort(), 45000);
-
   let response;
   try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
+    const requestOptions = {
       headers: {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(options.headers || {}),
       },
-      signal: controller.signal,
       ...options,
-    });
+    };
+
+    // Production/serverless cold starts can delay first response.
+    response = await fetchWithTimeout(`${API_BASE_URL}${path}`, requestOptions, 45000);
   } catch (fetchError) {
     if (fetchError.name === 'AbortError') {
-      throw new Error('Server response mein zyada time lag raha hai. Thori dair baad dobara try karein.');
+      try {
+        // Retry once after a short delay to handle backend cold start.
+        await wait(1200);
+        const requestOptions = {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            ...(options.headers || {}),
+          },
+          ...options,
+        };
+        response = await fetchWithTimeout(`${API_BASE_URL}${path}`, requestOptions, 45000);
+      } catch (retryError) {
+        if (retryError.name === 'AbortError') {
+          throw new Error('Server is taking too long to respond. Please try again in a moment.');
+        }
+        throw new Error('Unable to connect to server. Please try again.');
+      }
     }
-    throw new Error('Unable to connect to server. Please try again.');
-  } finally {
-    clearTimeout(timeoutId);
+    if (!response) {
+      throw new Error('Unable to connect to server. Please try again.');
+    }
   }
 
   let data = {};
