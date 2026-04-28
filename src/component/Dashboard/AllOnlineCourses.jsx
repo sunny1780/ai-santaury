@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { enrollInCourse, getApprovedCourses, getEnrolledCourses } from '../../utils/authApi';
 import { cacheEnrolledCourses, updateCachedEnrolledCourse } from '../../utils/courseCache';
@@ -22,6 +23,7 @@ function getStoredAuthUser() {
 }
 
 export default function AllOnlineCourses() {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [enrolledIds, setEnrolledIds] = useState([]);
   const [busyCourseId, setBusyCourseId] = useState('');
@@ -119,7 +121,16 @@ export default function AllOnlineCourses() {
             return (
               <article
                 key={course._id}
-                className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden flex flex-col"
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate(`/dashboard/explore/${course._id}`, { state: { course, from: 'explore' } })}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    navigate(`/dashboard/explore/${course._id}`, { state: { course, from: 'explore' } });
+                  }
+                }}
+                className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden flex flex-col cursor-pointer"
                 style={{ minHeight: 420 }}
               >
                 <div className="mx-3 mt-3 shrink-0 overflow-hidden rounded-xl bg-[#0B0B0B]" style={{ height: 230 }}>
@@ -178,7 +189,10 @@ export default function AllOnlineCourses() {
                   {isStudent ? (
                     <button
                       type="button"
-                      onClick={() => handleEnroll(course._id)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleEnroll(course._id);
+                      }}
                       disabled={isEnrolled || busyCourseId === course._id}
                       className={[
                         'mt-4 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors',

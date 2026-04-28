@@ -96,6 +96,7 @@ function App() {
         {/* Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/explore" element={<AllOnlineCourses />} />
+        <Route path="/dashboard/explore/:courseId" element={<StudentCourseDetails />} />
         <Route path="/dashboard/notifications" element={<Notifications />} />
         <Route path="/dashboard/learnings" element={<MyLearnings />} />
         <Route path="/dashboard/learnings/:courseId" element={<StudentCourseDetails />} />

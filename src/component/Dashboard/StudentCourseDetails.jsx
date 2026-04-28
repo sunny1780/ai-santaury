@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { getEnrolledCourseById } from '../../utils/authApi';
+import { getApprovedCourseById, getEnrolledCourseById } from '../../utils/authApi';
 import { getCachedEnrolledCourse } from '../../utils/courseCache';
 import { getCourseCardImage, getCourseImageAlt } from '../../utils/courseMedia';
 import { trackVideoWatchProgress } from '../../utils/watchProgress';
@@ -50,6 +50,9 @@ function getLectureVideoSource(course, lecture) {
 export default function StudentCourseDetails() {
   const { courseId } = useParams();
   const location = useLocation();
+  const isExploreView = location.pathname.startsWith('/dashboard/explore') || location.state?.from === 'explore';
+  const backToPath = isExploreView ? '/dashboard/explore' : '/dashboard/learnings';
+  const backToLabel = isExploreView ? 'Back to Explore' : 'Back to My Learnings';
   const initialCourse = location.state?.course || getCachedEnrolledCourse(courseId);
   const [course, setCourse] = useState(initialCourse);
   const [error, setError] = useState('');
@@ -67,12 +70,30 @@ export default function StudentCourseDetails() {
 
     async function loadCourse() {
       try {
-        const data = await getEnrolledCourseById(courseId);
+        const data = isExploreView
+          ? await getApprovedCourseById(courseId)
+          : await getEnrolledCourseById(courseId);
         if (!ignore) {
           setCourse(data.course || null);
           setError('');
         }
       } catch (loadError) {
+        if (!isExploreView && [401, 403, 404].some((code) => loadError.message?.includes(`(${code})`))) {
+          try {
+            const approvedData = await getApprovedCourseById(courseId);
+            if (!ignore) {
+              setCourse(approvedData.course || null);
+              setError('');
+            }
+            return;
+          } catch (approvedLoadError) {
+            if (!ignore) {
+              setError(approvedLoadError.message || 'Course detail load nahi ho saki.');
+            }
+            return;
+          }
+        }
+
         if (!ignore) {
           setError(loadError.message || 'Course detail load nahi ho saki.');
         }
@@ -88,7 +109,7 @@ export default function StudentCourseDetails() {
     return () => {
       ignore = true;
     };
-  }, [courseId, initialCourse]);
+  }, [courseId, initialCourse, isExploreView]);
 
   function handleVideoTimeUpdate(lectureKey, lectureId, event) {
     const video = event.currentTarget;
@@ -139,11 +160,11 @@ export default function StudentCourseDetails() {
       <main className="flex-1 px-6 py-6 lg:px-8">
         <div>
           <Link
-            to="/dashboard/learnings"
+            to={backToPath}
             className="text-sm font-medium text-[#2563EB] no-underline"
             style={{ fontFamily: 'Manrope, sans-serif' }}
           >
-            Back to My Learnings
+            {backToLabel}
           </Link>
           <h1 className="mb-0 mt-2 text-[30px] font-semibold text-[#182126]" style={{ fontFamily: 'Manrope, sans-serif' }}>
             Course Details
