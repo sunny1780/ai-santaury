@@ -2,7 +2,7 @@ import Sidebaar from './Sidebaar';
 
 export default function InstSimplePage({ title }) {
   return (
-    <div className="min-h-screen bg-[#F6F8FB] flex">
+    <div className="min-h-screen bg-[#F6F8FB] flex flex-col lg:flex-row">
       <Sidebaar />
       <main className="flex-1 px-5 sm:px-8 lg:px-10 py-6 sm:py-8">
         <h1

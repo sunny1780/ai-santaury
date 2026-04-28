@@ -112,7 +112,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex">
+    <div className="min-h-screen bg-[#F3F4F6] flex flex-col lg:flex-row">
       <Sidebar />
 
       <main className="flex-1 px-4 sm:px-8 lg:px-10 py-6 sm:py-8">

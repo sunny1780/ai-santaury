@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 const DashboardIcon = ({ className = 'w-4 h-4' }) => (
   <svg className={className} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,9 +116,11 @@ const bottomItems = [
 ];
 
 export default function Sidebar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [authUser, setAuthUser] = useState(null);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const profileMenuRef = useRef(null);
 
   useEffect(() => {
@@ -138,6 +140,10 @@ export default function Sidebar() {
       window.removeEventListener('storage', syncAuthUser);
     };
   }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     function handlePointerDown(event) {
@@ -184,8 +190,59 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="sticky top-0 h-screen w-64 bg-white border-r border-[#E5E7EB] flex flex-col px-4 pt-6 pb-6">
-      <div className="flex-1">
+    <>
+      <div className="lg:hidden border-b border-[#E5E7EB] bg-white px-3 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <img
+            src={`${process.env.PUBLIC_URL}/images/llogo.png`}
+            alt="AI Sanctuary"
+            className="h-10 w-auto"
+          />
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="inline-flex items-center gap-2 rounded-lg border border-[#E5E7EB] px-3 py-2 text-xs font-semibold text-[#111827]"
+            aria-expanded={isMobileMenuOpen}
+            aria-label="Toggle dashboard menu"
+          >
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
+            </svg>
+            Menu
+          </button>
+        </div>
+        {isMobileMenuOpen ? (
+          <div className="mt-3 rounded-xl border border-[#E5E7EB] bg-white p-2 shadow-sm">
+            <nav className="space-y-1">
+              {[...navItems, ...bottomItems].map((item) => (
+                <NavLink
+                  key={`mobile-${item.label}`}
+                  to={item.to}
+                  end={item.end}
+                  className={({ isActive }) =>
+                    [
+                      'block rounded-lg px-3 py-2 text-sm',
+                      isActive ? 'bg-[#E9F1FF] text-[#2563EB] font-medium' : 'text-[#111827] hover:bg-[#F3F4F6]',
+                    ].join(' ')
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="mt-2 w-full rounded-lg border border-[#FECACA] bg-[#FEF2F2] px-3 py-2 text-left text-sm font-semibold text-[#B91C1C]"
+            >
+              Log out
+            </button>
+          </div>
+        ) : null}
+      </div>
+
+      <aside className="sticky top-0 hidden h-screen w-64 border-r border-[#E5E7EB] bg-white px-4 pb-6 pt-6 lg:flex lg:flex-col">
+        <div className="flex-1">
         {/* Logo (above navigation) */}
         <div className="mb-6 flex items-center justify-start px-1">
           <img
@@ -304,7 +361,8 @@ export default function Sidebar() {
             </div>
           ) : null}
         </div>
-      </div>
-    </aside>
+        </div>
+      </aside>
+    </>
   );
 }

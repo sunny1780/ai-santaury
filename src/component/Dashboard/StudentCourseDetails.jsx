@@ -40,8 +40,16 @@ function getLectureVideoSource(course, lecture) {
     return lecture.contents.videoSection;
   }
 
+  if (isPlayableVideoSource(lecture?.contents?.videoFileName)) {
+    return lecture.contents.videoFileName;
+  }
+
   if (isPlayableVideoSource(course?.lectureAssets?.videoSection)) {
     return course.lectureAssets.videoSection;
+  }
+
+  if (isPlayableVideoSource(course?.lectureAssets?.videoFileName)) {
+    return course.lectureAssets.videoFileName;
   }
 
   return '';
@@ -88,14 +96,14 @@ export default function StudentCourseDetails() {
             return;
           } catch (approvedLoadError) {
             if (!ignore) {
-              setError(approvedLoadError.message || 'Course detail load nahi ho saki.');
+              setError(approvedLoadError.message || 'Unable to load course details.');
             }
             return;
           }
         }
 
         if (!ignore) {
-          setError(loadError.message || 'Course detail load nahi ho saki.');
+          setError(loadError.message || 'Unable to load course details.');
         }
       } finally {
         if (!ignore) {
@@ -154,7 +162,7 @@ export default function StudentCourseDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex">
+    <div className="min-h-screen bg-[#F3F4F6] flex flex-col lg:flex-row">
       <Sidebar />
 
       <main className="flex-1 px-6 py-6 lg:px-8">
@@ -173,7 +181,7 @@ export default function StudentCourseDetails() {
 
         {loading ? (
           <div className="mt-6 rounded-2xl border border-[#E5E7EB] bg-white px-6 py-10 text-sm text-[#64748B]">
-            Course load ho raha hai...
+            Loading course details...
           </div>
         ) : null}
 
@@ -231,13 +239,13 @@ export default function StudentCourseDetails() {
             <DetailBlock
               title="What You Will Learn"
               items={course.teachList}
-              emptyText="Is course ke learning points abhi add nahi kiye gaye."
+              emptyText="Learning points have not been added for this course yet."
             />
 
             <DetailBlock
               title="Requirements"
               items={course.reqList}
-              emptyText="Is course ke requirements abhi add nahi kiye gaye."
+              emptyText="Requirements have not been added for this course yet."
             />
 
             <section className="rounded-2xl border border-[#E5E7EB] bg-white p-5">
@@ -317,7 +325,7 @@ export default function StudentCourseDetails() {
                                   </div>
                                 ) : lecture.contents?.videoFileName ? (
                                   <div className="rounded-2xl border border-dashed border-[#CBD5E1] bg-[#F8FAFC] px-4 py-5 text-sm text-[#64748B]">
-                                    Video file `{lecture.contents.videoFileName}` attached hai, lekin is course mein playable video source save nahi hui.
+                                    Video file `{lecture.contents.videoFileName}` is attached, but no playable video source is saved for this course.
                                   </div>
                                 ) : null}
 
@@ -352,7 +360,7 @@ export default function StudentCourseDetails() {
                 </div>
               ) : (
                 <div className="mt-4 rounded-xl border border-dashed border-[#CBD5E1] px-4 py-5 text-sm text-[#64748B]">
-                  Is course ki lectures list abhi available nahi hai.
+                  The lecture list is not available for this course yet.
                 </div>
               )}
             </section>

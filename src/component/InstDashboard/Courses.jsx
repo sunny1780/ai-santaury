@@ -58,7 +58,7 @@ export default function Courses() {
   }, [courses, search]);
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex">
+    <div className="min-h-screen bg-[#F3F4F6] flex flex-col lg:flex-row">
       <Sidebaar />
 
       <main className="flex-1 px-6 py-6 lg:px-8">

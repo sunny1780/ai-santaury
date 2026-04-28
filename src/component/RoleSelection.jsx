@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthShell from './AuthShell';
 
 export default function RoleSelection() {
-  const [role, setRole] = useState('student');
+  const role = 'student';
   const navigate = useNavigate();
 
   return (
@@ -18,31 +17,19 @@ export default function RoleSelection() {
 
         <fieldset className="border-0 p-0">
           <legend className="mb-6 text-[20px] font-medium text-[#1D1D1F]">
-            Are you an student or Instructor?
+            You are signing up as a student.
           </legend>
 
-          <label className="mb-5 flex cursor-pointer items-center gap-4">
+          <label className="flex cursor-default items-center gap-4">
             <input
               type="radio"
               name="role"
               value="student"
-              checked={role === 'student'}
-              onChange={(event) => setRole(event.target.value)}
+              checked
+              readOnly
               className="h-5 w-5 accent-[#1A8CF0]"
             />
             <span className="text-[24px] text-[#3A3E47] sm:text-[28px]">Student</span>
-          </label>
-
-          <label className="flex cursor-pointer items-center gap-4">
-            <input
-              type="radio"
-              name="role"
-              value="instructor"
-              checked={role === 'instructor'}
-              onChange={(event) => setRole(event.target.value)}
-              className="h-5 w-5 accent-[#1A8CF0]"
-            />
-            <span className="text-[24px] text-[#8C919C] sm:text-[28px]">Instructor</span>
           </label>
         </fieldset>
 

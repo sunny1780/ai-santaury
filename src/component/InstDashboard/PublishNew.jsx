@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebaar from './Sidebaar';
 import InstructorUserBadge from './InstructorUserBadge';
 import { createCourse } from '../../utils/authApi';
-import { addCurrentUserNotification, addNotification } from '../../utils/notificationStore';
+import { addCurrentUserNotification } from '../../utils/notificationStore';
 
 const steps = [
   {
@@ -244,7 +244,7 @@ export default function PublishNew() {
     setLectureVideoError('');
   };
 
-  const canSubmitLectureVideo = lectureVideoSection.trim().length > 0 && lectureVideoFileName.length > 0;
+  const canSubmitLectureVideo = lectureVideoSection.trim().length > 0;
 
   const [attachModalOpen, setAttachModalOpen] = useState(false);
   const [lectureAttachFileName, setLectureAttachFileName] = useState('');
@@ -393,7 +393,7 @@ export default function PublishNew() {
 
   function validateBasicStep() {
     if (!title.trim() || !topic.trim() || !category || !courseLang || !level || !durationValue.trim()) {
-      setSubmitError('Title, topic, category, language, level aur duration required hain.');
+      setSubmitError('Title, topic, category, language, level, and duration are required.');
       return false;
     }
 
@@ -402,7 +402,7 @@ export default function PublishNew() {
 
   function validateAdvanceStep() {
     if (!courseDescription.trim() || !teachList.some((item) => item.trim()) || !whoForList.some((item) => item.trim())) {
-      setSubmitError('Description aur kam az kam ek learning point aur audience point required hai.');
+      setSubmitError('Description, at least one learning point, and one audience point are required.');
       return false;
     }
 
@@ -417,7 +417,7 @@ export default function PublishNew() {
     );
 
     if (!hasValidCurriculum) {
-      setSubmitError('Curriculum mein kam az kam ek section aur ek lecture name required hai.');
+      setSubmitError('Curriculum requires at least one section and one lecture name.');
       return false;
     }
 
@@ -487,29 +487,24 @@ export default function PublishNew() {
 
       if (savedCourse?.title) {
         addCurrentUserNotification({
-          text: `Your course "${savedCourse.title}" was submitted for admin approval.`,
-          type: 'info',
-        });
-        addNotification({
-          recipient: 'role:admin',
-          text: `A new course "${savedCourse.title}" is waiting for approval.`,
-          type: 'info',
+          text: `Your course "${savedCourse.title}" is now published.`,
+          type: 'success',
         });
       }
 
-      setSubmitSuccess('Course backend mein save ho gaya hai.');
+      setSubmitSuccess('Course has been saved successfully.');
       window.setTimeout(() => {
         navigate('/inst/courses');
       }, 900);
     } catch (error) {
-      setSubmitError(error.message || 'Course save nahi ho saka.');
+      setSubmitError(error.message || 'Unable to save the course.');
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <div className="min-h-screen bg-[#F6F8FB] flex">
+    <div className="min-h-screen bg-[#F6F8FB] flex flex-col lg:flex-row">
       <Sidebaar />
 
       <main className="flex-1 min-w-0 px-5 sm:px-8 lg:px-10 pt-0 pb-6 sm:pb-8">
@@ -1203,8 +1198,11 @@ export default function PublishNew() {
                 <input
                   type="text"
                   value={lectureVideoSection}
-                  readOnly
-                  placeholder="Upload video to attach with this lecture"
+                  onChange={(e) => {
+                    setLectureVideoSection(e.target.value);
+                    if (lectureVideoError) setLectureVideoError('');
+                  }}
+                  placeholder="Paste a direct video URL or upload a file"
                   className="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-sm text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-0"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 />
@@ -1232,7 +1230,7 @@ export default function PublishNew() {
                       };
                       reader.onerror = () => {
                         setLectureVideoSection('');
-                        setLectureVideoError('Video read nahi ho saki. Dobara upload karein.');
+                        setLectureVideoError('Could not read the selected video. Please upload again.');
                       };
                       reader.readAsDataURL(f);
                     }}
@@ -1280,9 +1278,12 @@ export default function PublishNew() {
                 style={{ fontFamily: 'Manrope, sans-serif' }}
                 onClick={() => {
                   if (!canSubmitLectureVideo) return;
+                  const trimmedVideoSection = lectureVideoSection.trim();
+                  const resolvedVideoFileName =
+                    lectureVideoFileName || (trimmedVideoSection.startsWith('http') ? 'External video URL' : '');
                   updateSelectedLectureContents({
-                    videoSection: lectureVideoSection,
-                    videoFileName: lectureVideoFileName,
+                    videoSection: trimmedVideoSection,
+                    videoFileName: resolvedVideoFileName,
                   });
                   closeVideoModal();
                 }}
