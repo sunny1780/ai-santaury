@@ -134,6 +134,11 @@ function createEmptySection(index = 0) {
   };
 }
 
+function stripDataUrl(value) {
+  if (typeof value !== 'string') return '';
+  return value.startsWith('data:') ? '' : value;
+}
+
 function ListBlock({ title, items, setItems, placeholder }) {
   const add = () => {
     setItems((prev) => (prev.length < LIST_MAX ? [...prev, ''] : prev));
@@ -436,6 +441,17 @@ export default function PublishNew() {
     setIsSubmitting(true);
 
     try {
+      const sanitizedCurriculum = curriculumSections.map((section) => ({
+        ...section,
+        lectures: (section.lectures || []).map((lecture) => ({
+          ...lecture,
+          contents: {
+            ...(lecture.contents || {}),
+            videoSection: stripDataUrl(lecture.contents?.videoSection),
+          },
+        })),
+      }));
+
       const response = await createCourse({
         title,
         subtitle,
@@ -449,16 +465,16 @@ export default function PublishNew() {
         durationUnit,
         description: courseDescription,
         thumbnailFileName,
-        thumbnailUrl,
+        thumbnailUrl: stripDataUrl(thumbnailUrl),
         trailerFileName,
         teachList,
         whoForList,
         reqList,
-        curriculum: curriculumSections,
+        curriculum: sanitizedCurriculum,
         welcomeMessage,
         congratulationsMessage,
         lectureAssets: {
-          videoSection: lectureVideoSection,
+          videoSection: stripDataUrl(lectureVideoSection),
           videoFileName: lectureVideoFileName,
           attachFileName: lectureAttachFileName,
           descriptionText: lectureDescriptionText,

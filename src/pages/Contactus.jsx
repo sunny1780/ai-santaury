@@ -5,12 +5,8 @@ import Heading2 from '../component/Headings';
 import Description from '../component/Descriptions';
 
 function resolveApiBase() {
-  if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL;
-  }
-
   if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    return 'http://localhost:5001/api';
+    return process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
   }
 
   return '/api';
