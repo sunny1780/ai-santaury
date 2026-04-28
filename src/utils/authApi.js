@@ -1,5 +1,17 @@
-const API_BASE_URL =
-  process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+function resolveApiBaseUrl() {
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return 'http://localhost:5001/api';
+  }
+
+  // Production should call same-origin /api and rely on hosting rewrites.
+  return '/api';
+}
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

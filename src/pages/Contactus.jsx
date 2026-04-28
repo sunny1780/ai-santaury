@@ -4,7 +4,19 @@ import Footer from '../component/Footer';
 import Heading2 from '../component/Headings';
 import Description from '../component/Descriptions';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+function resolveApiBase() {
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return 'http://localhost:5001/api';
+  }
+
+  return '/api';
+}
+
+const API_BASE = resolveApiBase();
 
 export default function Contactus() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
