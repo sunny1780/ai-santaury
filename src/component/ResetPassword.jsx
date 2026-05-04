@@ -7,8 +7,10 @@ export default function ResetPassword() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token') || '';
-  const [password, setPassword] = useState('password123##');
-  const [confirmPassword, setConfirmPassword] = useState('password123##');
+  const [email, setEmail] = useState(searchParams.get('email') || '');
+  const [resetCode, setResetCode] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,15 +24,15 @@ export default function ResetPassword() {
     event.preventDefault();
     setError('');
 
-    if (!token) {
-      setError('Reset token is missing. Open this page from your email link.');
+    if (!token && !resetCode.trim()) {
+      setError('Reset code is required. Check your email and enter the code here.');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      await resetPassword({ token, password, confirmPassword });
+      await resetPassword({ token, resetCode: resetCode.trim(), password, confirmPassword });
       navigate('/login');
     } catch (err) {
       setError(err.message);
@@ -65,11 +67,42 @@ export default function ResetPassword() {
             Reset your password
           </h1>
           <p className="mt-3 max-w-[420px] text-[18px] leading-8 text-[#7B7F8A]">
-            Please set a new password for your account.
+            Enter the code from your email and set a new password.
           </p>
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
+          <label className="block">
+            <span className="mb-2 block text-[18px] font-semibold text-[#1D1D1F]">
+              Email
+            </span>
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Your Email Address"
+              className="h-14 w-full rounded-[8px] border border-[#D8D8D8] px-4 text-[18px] text-[#1D1D1F] outline-none transition-colors placeholder:text-[#A2A2A2] focus:border-[#1A8CF0]"
+            />
+          </label>
+
+          {!token ? (
+            <label className="block">
+              <span className="mb-2 block text-[18px] font-semibold text-[#1D1D1F]">
+                Reset Code
+              </span>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                value={resetCode}
+                onChange={(event) => setResetCode(event.target.value.replace(/\D/g, '').slice(0, 6))}
+                placeholder="Enter 6-digit code"
+                required
+                className="h-14 w-full rounded-[8px] border border-[#D8D8D8] px-4 text-[18px] tracking-[0.2em] text-[#1D1D1F] outline-none transition-colors placeholder:tracking-normal placeholder:text-[#A2A2A2] focus:border-[#1A8CF0]"
+              />
+            </label>
+          ) : null}
+
           <label className="block">
             <span className="mb-2 block text-[18px] font-semibold text-[#1D1D1F]">
               New Password

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { forgotPassword } from '../utils/authApi';
 import AuthShell from './AuthShell';
 
@@ -26,7 +27,7 @@ export default function ForgotPassword() {
       const data = await forgotPassword({ email });
       setShowSuccess(true);
       setMessage(data.message);
-      setResetUrl(data.resetUrl || '');
+      setResetUrl(data.resetUrl || `/reset-password?email=${encodeURIComponent(email.trim())}`);
     } catch (err) {
       setShowSuccess(false);
       setError(err.message);
@@ -43,8 +44,7 @@ export default function ForgotPassword() {
             Forgot your password?
           </h1>
           <p className="mt-3 max-w-[420px] text-[18px] leading-8 text-[#7B7F8A]">
-            Don&rsquo;t worry, we&apos;ll send you a message to help you reset your
-            password.
+            Enter your email and we&apos;ll send a code to reset your password.
           </p>
         </div>
 
@@ -82,23 +82,23 @@ export default function ForgotPassword() {
             disabled={isSubmitting}
             className="h-14 w-full rounded-[14px] bg-[#1A8CF0] px-5 text-[18px] font-medium text-white transition-transform duration-200 hover:scale-[1.01] hover:bg-[#0F7FDE] disabled:cursor-not-allowed disabled:opacity-70"
           >
-            {isSubmitting ? 'Sending...' : 'Send Reset Password Instructions'}
+            {isSubmitting ? 'Sending...' : 'Send Reset Code'}
           </button>
         </form>
 
         {showSuccess ? (
           <div className="mt-6 rounded-[10px] bg-[#E6F7EC] px-6 py-4 text-center text-[16px] font-medium text-[#2C8C5A]">
-            {message || 'Check your email for the password reset link'}
+            {message || 'Check your email for the password reset code'}
           </div>
         ) : null}
 
         {resetUrl ? (
-          <a
-            href={resetUrl}
+          <Link
+            to={resetUrl}
             className="mt-4 block text-center text-[15px] font-medium text-[#1A8CF0] no-underline"
           >
-            Open reset link
-          </a>
+            Enter reset code
+          </Link>
         ) : null}
       </div>
     </AuthShell>
